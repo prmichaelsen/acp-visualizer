@@ -4,13 +4,14 @@ import { SearchInput } from '../components/SearchInput'
 import { StatusBadge } from '../components/StatusBadge'
 import { StatusDot } from '../components/StatusDot'
 import { buildSearchIndex } from '../lib/search'
+import { useProgressData } from '../contexts/ProgressContext'
 
 export const Route = createFileRoute('/search')({
   component: SearchPage,
 })
 
 function SearchPage() {
-  const { progressData } = Route.useRouteContext()
+  const progressData = useProgressData()
   const [query, setQuery] = useState('')
 
   const results = useMemo(() => {

@@ -2,13 +2,14 @@ import { createFileRoute } from '@tanstack/react-router'
 import { StatusBadge } from '../components/StatusBadge'
 import { ProgressBar } from '../components/ProgressBar'
 import { BurndownChart } from '../components/BurndownChart'
+import { useProgressData } from '../contexts/ProgressContext'
 
 export const Route = createFileRoute('/')({
   component: HomePage,
 })
 
 function HomePage() {
-  const { progressData } = Route.useRouteContext()
+  const progressData = useProgressData()
 
   if (!progressData) {
     return (

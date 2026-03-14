@@ -5,14 +5,14 @@ export type ProgressResult =
   | { ok: true; data: ProgressData }
   | { ok: false; error: 'FILE_NOT_FOUND' | 'PARSE_ERROR'; message: string; path: string }
 
-export const getProgressData = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<ProgressResult> => {
-    // Dynamic imports keep fs and yaml-loader out of the client bundle
+export const getProgressData = createServerFn({ method: 'GET' })
+  .validator((input: { path?: string }) => input)
+  .handler(async ({ data: input }): Promise<ProgressResult> => {
     const { readFileSync } = await import('fs')
     const { parseProgressYaml } = await import('../lib/yaml-loader')
     const { getProgressYamlPath } = await import('../lib/config')
 
-    const filePath = getProgressYamlPath()
+    const filePath = input.path || getProgressYamlPath()
 
     try {
       const raw = readFileSync(filePath, 'utf-8')
@@ -45,5 +45,4 @@ export const getProgressData = createServerFn({ method: 'GET' }).handler(
         path: filePath,
       }
     }
-  },
-)
+  })

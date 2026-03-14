@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { StatusDot } from '../components/StatusDot'
 import { ExtraFieldsBadge } from '../components/ExtraFieldsBadge'
+import { useProgressData } from '../contexts/ProgressContext'
 import type { Task } from '../lib/types'
 
 export const Route = createFileRoute('/tasks')({
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/tasks')({
 })
 
 function TasksPage() {
-  const { progressData } = Route.useRouteContext()
+  const progressData = useProgressData()
 
   if (!progressData) {
     return (

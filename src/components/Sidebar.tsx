@@ -1,5 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { LayoutDashboard, Flag, CheckSquare, Clock, Search } from 'lucide-react'
+import { ProjectSelector } from './ProjectSelector'
+import type { AcpProject } from '../services/projects.service'
 
 const navItems = [
   { to: '/' as const, icon: LayoutDashboard, label: 'Overview' },
@@ -8,7 +10,13 @@ const navItems = [
   { to: '/activity' as const, icon: Clock, label: 'Activity' },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  projects?: AcpProject[]
+  currentProject?: string | null
+  onProjectSelect?: (projectId: string) => void
+}
+
+export function Sidebar({ projects = [], currentProject = null, onProjectSelect }: SidebarProps) {
   const location = useRouterState({ select: (s) => s.location })
 
   return (
@@ -18,6 +26,15 @@ export function Sidebar() {
           ACP Visualizer
         </span>
       </div>
+      {projects.length > 1 && onProjectSelect && (
+        <div className="px-3 pt-3">
+          <ProjectSelector
+            projects={projects}
+            currentProject={currentProject}
+            onSelect={onProjectSelect}
+          />
+        </div>
+      )}
       <div className="flex-1 py-2">
         {navItems.map((item) => {
           const isActive =

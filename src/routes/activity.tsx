@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Clock } from 'lucide-react'
+import { useProgressData } from '../contexts/ProgressContext'
 
 export const Route = createFileRoute('/activity')({
   component: ActivityPage,
 })
 
 function ActivityPage() {
-  const { progressData } = Route.useRouteContext()
+  const progressData = useProgressData()
 
   if (!progressData) {
     return (

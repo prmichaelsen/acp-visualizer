@@ -7,6 +7,7 @@ import { ViewToggle, type ViewMode } from '../components/ViewToggle'
 import { FilterBar } from '../components/FilterBar'
 import { SearchInput } from '../components/SearchInput'
 import { useFilteredData } from '../lib/useFilteredData'
+import { useProgressData } from '../contexts/ProgressContext'
 import type { Status } from '../lib/types'
 
 export const Route = createFileRoute('/milestones')({
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/milestones')({
 })
 
 function MilestonesPage() {
-  const { progressData } = Route.useRouteContext()
+  const progressData = useProgressData()
   const [view, setView] = useState<ViewMode>('table')
   const [status, setStatus] = useState<Status | 'all'>('all')
   const [search, setSearch] = useState('')
