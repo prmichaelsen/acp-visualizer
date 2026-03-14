@@ -1,7 +1,247 @@
-# ACP Package Manifest
-# Tracks installed packages and their versions
-
 packages:
+  tanstack-cloudflare:
+    source: https://github.com/prmichaelsen/acp-tanstack-cloudflare.git
+    package_version: 1.2.0
+    commit: a7b38da5276d55bdd95e5afdde61bb17dfff52a3
+    installed_at: 2026-03-14T08:25:49Z
+    updated_at: 2026-03-14T08:25:49Z
+    files:
+      patterns:
+        - name: tanstack-cloudflare.zod-schema-validation.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:adb86721ba843d6aa0732d27bf2d67492e5771e3830f219303ea1b9172191ca6
+        - name: tanstack-cloudflare.wrangler-configuration.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:11bdd08fe4a069979d82eca9b6914e424bcf7de2cbdac87308aca15ec33f0e64
+        - name: tanstack-cloudflare.websocket-manager.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:3d02635ac5d36acc9a210a16349c52f86fb029c97bc3c708c970655b5e298583
+        - name: tanstack-cloudflare.user-scoped-collections.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:6469b71782f1e313d9d1042fe165e7976976537a43a259810f7a4089b60a8fe3
+        - name: tanstack-cloudflare.unified-header.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:766223cd53a8ec7706b924709d924351e1717c57b0ced19c15815472d8742549
+        - name: tanstack-cloudflare.toast-system.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:8ac5edd2b69b656775fdba1ac484b1c10218b97afde1547b6d1fb3ba5297e3a5
+        - name: tanstack-cloudflare.third-party-api-integration.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:c083463330b2fabb154349a7ab9c68791fd0a436e91b4b859cc1a8f9451385e3
+        - name: tanstack-cloudflare.ssr-preload.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:24758145fe8f65ff6cf1d44121157b7ccafbab4935631439b3a173162d964b2f
+        - name: tanstack-cloudflare.slide-over.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:093c6fd89cfaf999b0f3a742654ab11459fdfc341bbc8f0e27bf2e154cad505e
+        - name: tanstack-cloudflare.searchable-settings.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:e7dde5140043f1d22e719c62ed6f57d854b76bad826108c98667c81a46e75515
+        - name: tanstack-cloudflare.scheduled-tasks.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:0b82838b6f2c6e7f070786f8cc013ed06c25453c0ba5a7e3769f940724adef48
+        - name: tanstack-cloudflare.rate-limiting.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:6d1226c8316850cc35bad1e155e9a80d8b9866e227ca6cd0d49b7bc400ccc63a
+        - name: tanstack-cloudflare.provider-adapter.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:2d220ec327ca9b8b6cc4ec22c79554f64afce275639ad4c209bdb7f62bc9c7e9
+        - name: tanstack-cloudflare.pill-input.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:77cbb33bef218673ca48711c05a3f82cc0f2a426e33f77ac0031c5119ec15eb8
+        - name: tanstack-cloudflare.pagination.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:e82186a7e63e404b304294b8a4bf2009a7936149ca0229e81b7d62f6601485a2
+        - name: tanstack-cloudflare.og-metadata.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:77a215b9921b225580fbd2111d10b8a68b44ad942ad3ff4a31b65ea35137b236
+        - name: tanstack-cloudflare.oauth-token-refresh.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:5aa2142e895feb14632bca0adbea10cef65b886f993ba512a9b55d7901531d1f
+        - name: tanstack-cloudflare.notifications-engine.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:27f99c12451aec7dd41844560c2eaadf2aafb3d02300fed0a8db0e5e892f20fe
+        - name: tanstack-cloudflare.nextjs-to-tanstack-routing.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:c07222752febcd9841a8257d830ab45a28812805f223432798e2a362878e9af5
+        - name: tanstack-cloudflare.modal.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:7b3bb372452a0f6f7a6402af9dc68b1d88271f799640a031540d237080a3df5d
+        - name: tanstack-cloudflare.mention-suggestions.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:ddac4f68f056a0109b58dc684454c6a17811d9008fcb71e8f6e105ca4b49ca40
+        - name: tanstack-cloudflare.markdown-content.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:53d6f1da3683bd103f15206b9590a27c4d6203dbab96500ce3d308456db12a66
+        - name: tanstack-cloudflare.lightbox.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:4ffb50d603be7634f64fb40493eb645600f61d0126548b329286f6503aaedbfc
+        - name: tanstack-cloudflare.library-services.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:add205df35786610db4f30eeae5c22e8fef522d5e6da260cf7201a2e10d93995
+        - name: tanstack-cloudflare.image-carousel.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:418d2754d500e4f26b6e806ab1dd2fe5a88f21c9d3e84ebe386a6f3b8611bee2
+        - name: tanstack-cloudflare.global-search-context.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:e4639607f5a03fecf96cc56a441de680055ceac88140997ed9eb90b28216f8e8
+        - name: tanstack-cloudflare.form-controls.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:f8c617ae392a39d83c9a24cb88d22bcdf88648285f0fffee5bd82ea176b5e2d1
+        - name: tanstack-cloudflare.firebase-storage.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:af119009a4acf318a87478626234a4fc61d76787ff60f800105e04e89f88bab7
+        - name: tanstack-cloudflare.firebase-firestore.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:671ec50be46027dabb0c2498d85e2b5aa30f443534206f0252adb6b910478ee5
+        - name: tanstack-cloudflare.firebase-auth.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:b2b1701e5e1b34597e68fce18079288cf5a94440f0963e38f2ac723c4b860a14
+        - name: tanstack-cloudflare.firebase-anonymous-sessions.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:b0a3334caef04ddbb8bb8266e8e6c4a834f067447a8ed953530362e3f4975d08
+        - name: tanstack-cloudflare.fcm-push.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:31a1f4fa755cca2ddc9fb7df460d101fdfdaf3f618940a0151f9c4d962e28750
+        - name: tanstack-cloudflare.expander.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:1cca83093335dec65c70e4940f0cab42f139244d784dd27493b2509f21a19072
+        - name: tanstack-cloudflare.email-service.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:89191ee26f1151706cac35f31545d76f153199922e404d73352fa8f59bd05828
+        - name: tanstack-cloudflare.durable-objects-websocket.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:03f55b506bd0535c1f3aae769223becd9fc1ed436eb2d7f120d2c26bda061c23
+        - name: tanstack-cloudflare.confirmation-tokens.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:2886bee926fff0c0395a7c159257b1b741f933165126fdf44774b850db037108
+        - name: tanstack-cloudflare.chat-engine.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:f5fffc5f7c973b6b9e69d857b585afea7aa8e22f33c7275aa39eb4b5e48c0a99
+        - name: tanstack-cloudflare.card-and-list.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:97061ed34876e499559bca7af5c04bb0003328fb706a55ec014077ac600474f2
+        - name: tanstack-cloudflare.auth-session-management.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:bc4d32b53bbb6651daeb2fe532c0f43dd972fa939dea45bd7fc73f0eba95a512
+        - name: tanstack-cloudflare.api-route-handlers.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:d4ac07bb7453edd4493ca313c56a641c58fd8760a16741610d1ad0fc0da2b366
+        - name: tanstack-cloudflare.action-bar-item.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:d91fd67507ebfa7a304359124fc59c17f2906f6e70441863a491e54b1fc18bec
+        - name: tanstack-cloudflare.acl-permissions.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:769dae3dfc5dab520d5df259039a32db1e5d17082eef4a1060790d9f2e82ca46
+      commands:
+        - name: tanstack-cloudflare.tail.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:643d50910f50c3e7912488f4165cd0db92db53e12356efa15bac0161d100999e
+        - name: tanstack-cloudflare.deploy.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:66e1ab357c44cd26d356bc3e6ffe0b50d62bd36e9180f633a97b6b02d3de3e24
+        - name: git.init.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:2cd8bef13ba0278c3c3389631835aa4663a82c324bbb894aabd4299bb2370d53
+        - name: git.commit.md
+          version: 0.0.0
+          installed_at: 2026-03-14T08:25:56Z
+          modified: false
+          checksum: sha256:96249dee1a09f941f8ca2f072b53c90fa21fc34505fca4999d7c0c02982b3d02
+      designs:
+      scripts:
+      files:
+      indices:
   acp-core:
     source: https://github.com/prmichaelsen/agent-context-protocol.git
     package_version: 5.18.3
@@ -58,6 +298,5 @@ packages:
       designs:
         - name: design.template.md
         - name: requirements.template.md
-
 manifest_version: 1.0.0
-last_updated: 2026-03-14T08:19:21Z
+last_updated: 2026-03-14T08:25:49Z
