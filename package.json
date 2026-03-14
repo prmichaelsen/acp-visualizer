@@ -1,8 +1,19 @@
 {
-  "name": "agent-context-protocol-visualizer",
+  "name": "@prmichaelsen/acp-visualizer",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
+  "description": "Browser-based dashboard for visualizing ACP progress.yaml data",
+  "bin": {
+    "acp-visualizer": "./bin/visualize.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "agent/",
+    "vite.config.ts",
+    "tsconfig.json",
+    "vitest.config.ts"
+  ],
   "scripts": {
     "dev": "vite dev --port 3400 --host",
     "build": "vite build",
