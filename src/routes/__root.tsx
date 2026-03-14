@@ -5,6 +5,7 @@ import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { getProgressData } from '../services/progress-database.service'
 import { listProjects, getProjectProgressPath } from '../services/projects.service'
+import { fetchGitHubProgress } from '../services/github.service'
 import type { ProgressData } from '../lib/types'
 import type { AcpProject } from '../services/projects.service'
 import { ProgressProvider } from '../contexts/ProgressContext'
@@ -66,6 +67,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     context.progressData?.project.name || null,
   )
 
+  const handleGitHubLoad = useCallback(async (owner: string, repo: string) => {
+    const result = await fetchGitHubProgress({ data: { owner, repo } })
+    if (result.ok) {
+      setProgressData(result.data)
+      setCurrentProject(`${owner}/${repo}`)
+    } else {
+      throw new Error(result.message)
+    }
+  }, [])
+
   const handleProjectSwitch = useCallback(async (projectId: string) => {
     try {
       const path = await getProjectProgressPath({ data: { projectId } })
@@ -93,6 +104,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             projects={context.projects}
             currentProject={currentProject}
             onProjectSelect={handleProjectSwitch}
+            onGitHubLoad={handleGitHubLoad}
           />
           <ProgressProvider data={progressData}>
             <div className="flex-1 flex flex-col overflow-hidden">

@@ -1,6 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { LayoutDashboard, Flag, CheckSquare, Clock, Search } from 'lucide-react'
 import { ProjectSelector } from './ProjectSelector'
+import { GitHubInput } from './GitHubInput'
 import type { AcpProject } from '../services/projects.service'
 
 const navItems = [
@@ -14,9 +15,10 @@ interface SidebarProps {
   projects?: AcpProject[]
   currentProject?: string | null
   onProjectSelect?: (projectId: string) => void
+  onGitHubLoad?: (owner: string, repo: string) => Promise<void>
 }
 
-export function Sidebar({ projects = [], currentProject = null, onProjectSelect }: SidebarProps) {
+export function Sidebar({ projects = [], currentProject = null, onProjectSelect, onGitHubLoad }: SidebarProps) {
   const location = useRouterState({ select: (s) => s.location })
 
   return (
@@ -58,7 +60,7 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect 
           )
         })}
       </div>
-      <div className="p-3 border-t border-gray-800">
+      <div className="p-3 border-t border-gray-800 space-y-2">
         <Link
           to="/search"
           className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-500 bg-gray-900 border border-gray-800 rounded-md hover:text-gray-300 hover:border-gray-600 transition-colors"
@@ -66,6 +68,9 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect 
           <Search className="w-4 h-4" />
           Search...
         </Link>
+        {onGitHubLoad && (
+          <GitHubInput onLoad={onGitHubLoad} />
+        )}
       </div>
     </nav>
   )
