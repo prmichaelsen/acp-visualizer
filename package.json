@@ -18,7 +18,13 @@
     "serve": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "deploy": "export $(grep -v '^#' .env | grep -v '^$' | xargs) && npm run build && export $(grep -v '^#' .env.cloudflare.local | grep -v '^$' | xargs) && wrangler deploy",
+    "tail": "export $(grep -v '^#' .env.cloudflare.local | grep -v '^$' | xargs) && wrangler tail",
+    "cf-secrets:e1": "tsx scripts/upload-cloudflare-secrets.ts -- --env .env.e1.local",
+    "cf-secrets:prod": "tsx scripts/upload-cloudflare-secrets.ts -- --env .env.prod.local",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
