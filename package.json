@@ -16,6 +16,8 @@
     "dev": "vite dev --port 3400 --host",
     "build": "vite build",
     "serve": "vite preview",
+    "deploy": "export $(cat .env.cloudflare.local | xargs) && npm run build && wrangler deploy",
+    "tail": "export $(cat .env.cloudflare.local | xargs) && wrangler tail",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -27,6 +29,8 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.28.0",
+    "@cloudflare/workers-types": "^4.20260313.1",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-start": "^1.132.0",
