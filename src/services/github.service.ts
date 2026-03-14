@@ -10,7 +10,23 @@ export const fetchGitHubProgress = createServerFn({ method: 'GET' })
   .handler(async ({ data: input }): Promise<GitHubResult> => {
     const { parseProgressYaml } = await import('../lib/yaml-loader')
 
-    const branch = input.branch || 'main'
+    let branch = input.branch
+    if (!branch) {
+      // Detect default branch from GitHub API (not always 'main')
+      try {
+        const metaRes = await fetch(`https://api.github.com/repos/${input.owner}/${input.repo}`, {
+          headers: input.token ? { Authorization: `token ${input.token}` } : {},
+        })
+        if (metaRes.ok) {
+          const meta = await metaRes.json() as { default_branch?: string }
+          branch = meta.default_branch || 'main'
+        } else {
+          branch = 'main'
+        }
+      } catch {
+        branch = 'main'
+      }
+    }
     const url = `https://raw.githubusercontent.com/${input.owner}/${input.repo}/${branch}/agent/progress.yaml`
 
     try {
