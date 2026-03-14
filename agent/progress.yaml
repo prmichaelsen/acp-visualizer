@@ -2,8 +2,8 @@ project:
   name: agent-context-protocol-visualizer
   version: 0.1.0
   started: 2026-03-14
-  status: completed
-  current_milestone: milestone_2
+  status: in_progress
+  current_milestone: milestone_3
   description: |
     Browser-based read-only dashboard for visualizing ACP progress.yaml data.
     TanStack Start app with table/tree/kanban views, search, filtering, and auto-refresh.
@@ -30,6 +30,17 @@ milestones:
     tasks_completed: 6
     tasks_total: 6
     notes: P0 dashboard UI — table, tree, search, filtering
+
+  - id: milestone_3
+    name: Detail Views
+    status: not_started
+    progress: 0
+    started: null
+    completed: null
+    estimated_weeks: "1"
+    tasks_completed: 0
+    tasks_total: 4
+    notes: P1 — clickable milestone/task detail pages with markdown rendering
 
 tasks:
   milestone_1:
@@ -114,18 +125,59 @@ tasks:
       completed_date: "2026-03-14"
       notes: Error states, empty states, end-to-end verification
 
+  milestone_3:
+    - id: task_11
+      name: Install Markdown Dependencies & Build MarkdownContent Component
+      status: not_started
+      file: agent/tasks/milestone-3-detail-views/task-11-markdown-rendering-infrastructure.md
+      estimated_hours: "2"
+      completed_date: null
+      notes: react-markdown, rehype-highlight, @tailwindcss/typography, MarkdownContent component
+
+    - id: task_12
+      name: Build Markdown Loading Service
+      status: not_started
+      file: agent/tasks/milestone-3-detail-views/task-12-markdown-loading-service.md
+      estimated_hours: "3"
+      completed_date: null
+      notes: Server functions for local/GitHub markdown loading, milestone file resolution
+
+    - id: task_13
+      name: Implement Detail Page Routes
+      status: not_started
+      file: agent/tasks/milestone-3-detail-views/task-13-detail-page-routes.md
+      estimated_hours: "4"
+      completed_date: null
+      notes: /milestones/$milestoneId and /tasks/$taskId routes with metadata headers
+
+    - id: task_14
+      name: Integrate Navigation Links
+      status: not_started
+      file: agent/tasks/milestone-3-detail-views/task-14-navigation-links.md
+      estimated_hours: "2"
+      completed_date: null
+      notes: Make titles clickable links in table, tree, kanban, and task list views
+
 documentation:
-  design_documents: 6
-  milestone_documents: 2
+  design_documents: 7
+  milestone_documents: 3
   pattern_documents: 42
-  task_documents: 10
+  task_documents: 14
 
 progress:
   planning: 100
-  implementation: 100
-  overall: 100
+  implementation: 71
+  overall: 71
 
 recent_work:
+  - date: "2026-03-14"
+    description: P1 detail views planned
+    items:
+      - Created clarification-1-milestone-task-detail-views.md (17 questions answered)
+      - Created design document local.milestone-task-detail-views.md
+      - Created milestone-3 (Detail Views) with 4 tasks
+      - Created key file index (local.main.yaml)
+
   - date: "2026-03-14"
     description: Project planning complete
     items:
@@ -136,9 +188,9 @@ recent_work:
       - Created milestone and task documents
 
 next_steps:
-  - "P0 complete — test with other ACP project progress.yaml files"
-  - "Point visualizer at remember-core via PROGRESS_YAML_PATH env var"
-  - "Plan P1 features: kanban view, activity timeline, GitHub remote loading"
+  - "Start M3 Task 11: Install markdown dependencies & build MarkdownContent component"
+  - "Complete M3: Detail Views (4 tasks, ~11 hours estimated)"
+  - "Test detail views with remember-core progress.yaml"
 
 notes: []
 

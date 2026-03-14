@@ -1,0 +1,26 @@
+# agent/index/local.main.yaml
+# Key file index for project-local files
+
+local:
+  index:
+    - path: agent/design/local.visualizer-requirements.md
+      weight: 1.0
+      kind: requirements
+      description: |
+        Core project requirements defining goals, constraints,
+        and success criteria for the visualizer application.
+      rationale: |
+        Must be read before any design or task creation to ensure
+        alignment with project goals.
+      applies: acp.init, acp.design-create, acp.task-create, acp.plan, acp.proceed
+
+    - path: agent/design/local.milestone-task-detail-views.md
+      weight: 0.7
+      kind: design
+      description: |
+        Design for clickable milestone/task detail pages that render
+        markdown content with metadata headers, breadcrumbs, and sibling navigation.
+      rationale: |
+        Defines routing, markdown loading, rendering approach, and layout
+        for the detail view feature (M3). Read before implementing detail views.
+      applies: acp.proceed, acp.task-create, acp.plan
