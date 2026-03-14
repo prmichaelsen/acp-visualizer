@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.1] - 2026-03-14
+
+### Fixed
+- Split milestones/tasks into layout+index routes so detail page child routes render correctly
+- Wrap ReactMarkdown in div for className prop (removed in react-markdown v10)
+
 ## [0.6.0] - 2026-03-14
 
 ### Added
