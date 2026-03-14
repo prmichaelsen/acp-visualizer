@@ -11,15 +11,15 @@ export interface AcpProject {
 
 export const listProjects = createServerFn({ method: 'GET' }).handler(
   async (): Promise<AcpProject[]> => {
-    const { readFileSync, existsSync } = await import('fs')
-    const { resolve } = await import('path')
-    const { homedir } = await import('os')
-    const yaml = await import('js-yaml')
-
-    const projectsFile = resolve(homedir(), '.acp', 'projects.yaml')
-    if (!existsSync(projectsFile)) return []
-
     try {
+      const { readFileSync, existsSync } = await import('fs')
+      const { resolve } = await import('path')
+      const { homedir } = await import('os')
+      const yaml = await import('js-yaml')
+
+      const projectsFile = resolve(homedir(), '.acp', 'projects.yaml')
+      if (!existsSync(projectsFile)) return []
+
       const raw = readFileSync(projectsFile, 'utf-8')
       const doc = yaml.load(raw, { json: true }) as Record<string, unknown>
       const projects = (doc?.projects || {}) as Record<string, Record<string, unknown>>
@@ -37,6 +37,7 @@ export const listProjects = createServerFn({ method: 'GET' }).handler(
         }
       })
     } catch {
+      // Cloudflare Workers: no filesystem
       return []
     }
   },
@@ -45,15 +46,15 @@ export const listProjects = createServerFn({ method: 'GET' }).handler(
 export const getProjectProgressPath = createServerFn({ method: 'GET' })
   .validator((input: { projectId: string }) => input)
   .handler(async ({ data }): Promise<string | null> => {
-    const { readFileSync, existsSync } = await import('fs')
-    const { resolve } = await import('path')
-    const { homedir } = await import('os')
-    const yaml = await import('js-yaml')
-
-    const projectsFile = resolve(homedir(), '.acp', 'projects.yaml')
-    if (!existsSync(projectsFile)) return null
-
     try {
+      const { readFileSync, existsSync } = await import('fs')
+      const { resolve } = await import('path')
+      const { homedir } = await import('os')
+      const yaml = await import('js-yaml')
+
+      const projectsFile = resolve(homedir(), '.acp', 'projects.yaml')
+      if (!existsSync(projectsFile)) return null
+
       const raw = readFileSync(projectsFile, 'utf-8')
       const doc = yaml.load(raw, { json: true }) as Record<string, unknown>
       const projects = (doc?.projects || {}) as Record<string, Record<string, unknown>>
