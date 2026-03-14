@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { resolve, dirname } from 'path'
-import { existsSync, cpSync, mkdirSync, rmSync } from 'fs'
+import { existsSync, cpSync, rmSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { spawn } from 'child_process'
 
@@ -56,43 +56,37 @@ if (!existsSync(progressPath)) {
   process.exit(1)
 }
 
-// Strategy: copy source files into the node_modules root where deps
-// are hoisted. This gives vite a project root with node_modules as a
-// direct child, so ESM resolution works correctly for TanStack Start's
-// virtual modules.
-
+// Find the directory that contains node_modules with vite installed.
+// When run via npx, deps are hoisted to ~/.npm/_npx/xxx/node_modules/
 function findNodeModulesRoot() {
   let dir = packageRoot
   while (dir !== '/') {
-    const candidate = resolve(dir, 'node_modules')
-    if (existsSync(resolve(candidate, '.bin', 'vite'))) return dir
+    if (existsSync(resolve(dir, 'node_modules', '.bin', 'vite'))) return dir
     dir = resolve(dir, '..')
   }
   return packageRoot
 }
 
 const nmRoot = findNodeModulesRoot()
-const workDir = resolve(nmRoot, '.acp-visualizer-app')
 
-// Copy source files into workDir (small — ~60KB)
-rmSync(workDir, { recursive: true, force: true })
-mkdirSync(workDir, { recursive: true })
-cpSync(resolve(packageRoot, 'src'), resolve(workDir, 'src'), { recursive: true })
-cpSync(resolve(packageRoot, 'vite.config.ts'), resolve(workDir, 'vite.config.ts'))
-cpSync(resolve(packageRoot, 'tsconfig.json'), resolve(workDir, 'tsconfig.json'))
-cpSync(resolve(packageRoot, 'package.json'), resolve(workDir, 'package.json'))
+// Copy source files directly into nmRoot (the dir that already has
+// node_modules/ as a direct child). No symlinks — vite gets a real
+// project root with real node_modules, so ESM resolution works.
+const filesToCopy = ['src', 'vite.config.ts', 'tsconfig.json', 'package.json']
+const copied = []
 
-// Symlink the existing node_modules into the workdir
-// (they're one level up, so ../node_modules)
-const existingNM = resolve(nmRoot, 'node_modules')
-const targetNM = resolve(workDir, 'node_modules')
-if (!existsSync(targetNM)) {
-  const { symlinkSync } = await import('fs')
-  symlinkSync(existingNM, targetNM)
+for (const f of filesToCopy) {
+  const src = resolve(packageRoot, f)
+  const dest = resolve(nmRoot, f)
+  if (src === dest) continue  // already in the right place (local dev)
+  cpSync(src, dest, { recursive: true })
+  copied.push(dest)
 }
 
 function cleanup() {
-  try { rmSync(workDir, { recursive: true, force: true }) } catch { /* best effort */ }
+  for (const f of copied) {
+    try { rmSync(f, { recursive: true, force: true }) } catch { /* best effort */ }
+  }
 }
 process.on('exit', cleanup)
 process.on('SIGINT', () => { cleanup(); process.exit(130) })
@@ -102,10 +96,10 @@ console.log(`\n  ACP Progress Visualizer`)
 console.log(`  Loading: ${progressPath}`)
 console.log(`  Port:    ${port}\n`)
 
-const viteBin = resolve(workDir, 'node_modules', '.bin', 'vite')
+const viteBin = resolve(nmRoot, 'node_modules', '.bin', 'vite')
 
 const child = spawn(viteBin, ['dev', '--port', port, '--host'], {
-  cwd: workDir,
+  cwd: nmRoot,
   stdio: 'inherit',
   env: {
     ...process.env,
