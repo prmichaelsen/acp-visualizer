@@ -1,5 +1,5 @@
-import { HeadContent, Scripts, createRootRoute, Outlet, useRouter } from '@tanstack/react-router'
-import { useState, useCallback } from 'react'
+import { HeadContent, Scripts, createRootRoute, Outlet, useRouter, useRouterState } from '@tanstack/react-router'
+import { useState, useCallback, useEffect } from 'react'
 import { useAutoRefresh } from '../lib/useAutoRefresh'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
@@ -77,18 +77,59 @@ function AutoRefresh() {
   return null
 }
 
+/** Read ?repo=owner/repo from current URL search params */
+function getRepoFromUrl(): { owner: string; repo: string } | null {
+  if (typeof window === 'undefined') return null
+  const params = new URLSearchParams(window.location.search)
+  const repo = params.get('repo')
+  if (!repo) return null
+  const parts = repo.split('/')
+  if (parts.length < 2) return null
+  return { owner: parts[0], repo: parts[1] }
+}
+
+/** Update ?repo= search param without full navigation */
+function setRepoInUrl(ownerRepo: string | null) {
+  if (typeof window === 'undefined') return
+  const url = new URL(window.location.href)
+  if (ownerRepo) {
+    url.searchParams.set('repo', ownerRepo)
+  } else {
+    url.searchParams.delete('repo')
+  }
+  window.history.replaceState({}, '', url.toString())
+}
+
 function RootLayout() {
   const context = Route.useRouteContext()
   const [progressData, setProgressData] = useState(context.progressData)
   const [currentProject, setCurrentProject] = useState<string | null>(
     context.progressData?.project.name || null,
   )
+  const [initialLoadDone, setInitialLoadDone] = useState(false)
+
+  // On mount, check for ?repo= param and auto-load
+  useEffect(() => {
+    if (initialLoadDone) return
+    setInitialLoadDone(true)
+
+    const repoParam = getRepoFromUrl()
+    if (repoParam && !progressData) {
+      fetchGitHubProgress({ data: repoParam }).then((result) => {
+        if (result.ok) {
+          setProgressData(result.data)
+          setCurrentProject(`${repoParam.owner}/${repoParam.repo}`)
+        }
+      })
+    }
+  }, [initialLoadDone, progressData])
 
   const handleGitHubLoad = useCallback(async (owner: string, repo: string) => {
     const result = await fetchGitHubProgress({ data: { owner, repo } })
     if (result.ok) {
       setProgressData(result.data)
       setCurrentProject(`${owner}/${repo}`)
+      setRepoInUrl(`${owner}/${repo}`)
     } else {
       throw new Error(result.message)
     }
@@ -102,6 +143,7 @@ function RootLayout() {
         if (result.ok) {
           setProgressData(result.data)
           setCurrentProject(projectId)
+          setRepoInUrl(null) // Clear repo param for local projects
         }
       }
     } catch {
