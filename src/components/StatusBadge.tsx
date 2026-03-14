@@ -1,4 +1,4 @@
-import type { Status } from '@/lib/types'
+import type { Status } from '../lib/types'
 
 const statusStyles: Record<Status, string> = {
   completed: 'bg-green-500/15 text-green-400 border-green-500/20',

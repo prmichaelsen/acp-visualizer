@@ -1,4 +1,4 @@
-import type { Status } from '@/lib/types'
+import type { Status } from '../lib/types'
 
 const dotStyles: Record<Status, { symbol: string; color: string }> = {
   completed: { symbol: '✓', color: 'text-green-400' },

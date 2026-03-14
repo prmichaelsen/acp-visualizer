@@ -1,9 +1,9 @@
 import { HeadContent, Scripts, createRootRoute, Outlet } from '@tanstack/react-router'
-import { useAutoRefresh } from '@/lib/useAutoRefresh'
-import { Sidebar } from '@/components/Sidebar'
-import { Header } from '@/components/Header'
-import { ProgressDatabaseService } from '@/services/progress-database.service'
-import type { ProgressData } from '@/lib/types'
+import { useAutoRefresh } from '../lib/useAutoRefresh'
+import { Sidebar } from '../components/Sidebar'
+import { Header } from '../components/Header'
+import { ProgressDatabaseService } from '../services/progress-database.service'
+import type { ProgressData } from '../lib/types'
 
 import appCss from '../styles.css?url'
 

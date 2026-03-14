@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getFileWatcher } from '@/lib/file-watcher'
+import { getFileWatcher } from '../../lib/file-watcher'
 
 export const Route = createFileRoute('/api/watch')({
   server: {

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StatusBadge } from '@/components/StatusBadge'
-import { ProgressBar } from '@/components/ProgressBar'
+import { StatusBadge } from '../components/StatusBadge'
+import { ProgressBar } from '../components/ProgressBar'
 
 export const Route = createFileRoute('/')({
   component: HomePage,

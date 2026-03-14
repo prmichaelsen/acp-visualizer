@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, useMemo } from 'react'
-import { SearchInput } from '@/components/SearchInput'
-import { StatusBadge } from '@/components/StatusBadge'
-import { StatusDot } from '@/components/StatusDot'
-import { buildSearchIndex } from '@/lib/search'
+import { SearchInput } from '../components/SearchInput'
+import { StatusBadge } from '../components/StatusBadge'
+import { StatusDot } from '../components/StatusDot'
+import { buildSearchIndex } from '../lib/search'
 
 export const Route = createFileRoute('/search')({
   component: SearchPage,

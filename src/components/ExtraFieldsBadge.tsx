@@ -1,4 +1,4 @@
-import type { ExtraFields } from '@/lib/types'
+import type { ExtraFields } from '../lib/types'
 
 export function ExtraFieldsBadge({ fields }: { fields: ExtraFields }) {
   const count = Object.keys(fields).length

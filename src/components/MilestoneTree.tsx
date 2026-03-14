@@ -3,8 +3,8 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
 import { ProgressBar } from './ProgressBar'
 import { TaskList } from './TaskList'
-import { useCollapse } from '@/lib/useCollapse'
-import type { Milestone, Task } from '@/lib/types'
+import { useCollapse } from '../lib/useCollapse'
+import type { Milestone, Task } from '../lib/types'
 
 interface MilestoneTreeProps {
   milestones: Milestone[]

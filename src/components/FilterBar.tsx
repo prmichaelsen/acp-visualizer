@@ -1,4 +1,4 @@
-import type { Status } from '@/lib/types'
+import type { Status } from '../lib/types'
 
 const statusOptions: Array<{ value: Status | 'all'; label: string }> = [
   { value: 'all', label: 'All' },

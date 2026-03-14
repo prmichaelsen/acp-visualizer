@@ -11,7 +11,7 @@ import { ChevronDown, ChevronRight, ArrowUpDown } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
 import { ProgressBar } from './ProgressBar'
 import { TaskList } from './TaskList'
-import type { Milestone, Task } from '@/lib/types'
+import type { Milestone, Task } from '../lib/types'
 
 const columnHelper = createColumnHelper<Milestone>()
 

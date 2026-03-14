@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StatusDot } from '@/components/StatusDot'
-import { ExtraFieldsBadge } from '@/components/ExtraFieldsBadge'
-import type { Task } from '@/lib/types'
+import { StatusDot } from '../components/StatusDot'
+import { ExtraFieldsBadge } from '../components/ExtraFieldsBadge'
+import type { Task } from '../lib/types'
 
 export const Route = createFileRoute('/tasks')({
   component: TasksPage,

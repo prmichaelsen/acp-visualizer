@@ -1,6 +1,6 @@
 import { StatusDot } from './StatusDot'
 import { ExtraFieldsBadge } from './ExtraFieldsBadge'
-import type { Task } from '@/lib/types'
+import type { Task } from '../lib/types'
 
 export function TaskList({ tasks }: { tasks: Task[] }) {
   if (tasks.length === 0) {

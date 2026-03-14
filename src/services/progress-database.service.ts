@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
-import { parseProgressYaml } from '@/lib/yaml-loader'
-import { getProgressYamlPath } from '@/lib/config'
-import type { ProgressData } from '@/lib/types'
+import { parseProgressYaml } from '../lib/yaml-loader'
+import { getProgressYamlPath } from '../lib/config'
+import type { ProgressData } from '../lib/types'
 
 export type ProgressResult =
   | { ok: true; data: ProgressData }

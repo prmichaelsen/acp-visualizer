@@ -1,6 +1,6 @@
 import { StatusBadge } from './StatusBadge'
 import { ProgressBar } from './ProgressBar'
-import type { ProgressData } from '@/lib/types'
+import type { ProgressData } from '../lib/types'
 
 interface HeaderProps {
   data: ProgressData | null

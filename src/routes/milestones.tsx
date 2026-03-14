@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import { MilestoneTable } from '@/components/MilestoneTable'
-import { MilestoneTree } from '@/components/MilestoneTree'
-import { ViewToggle } from '@/components/ViewToggle'
-import { FilterBar } from '@/components/FilterBar'
-import { SearchInput } from '@/components/SearchInput'
-import { useFilteredData } from '@/lib/useFilteredData'
-import type { Status } from '@/lib/types'
+import { MilestoneTable } from '../components/MilestoneTable'
+import { MilestoneTree } from '../components/MilestoneTree'
+import { ViewToggle } from '../components/ViewToggle'
+import { FilterBar } from '../components/FilterBar'
+import { SearchInput } from '../components/SearchInput'
+import { useFilteredData } from '../lib/useFilteredData'
+import type { Status } from '../lib/types'
 
 export const Route = createFileRoute('/milestones')({
   component: MilestonesPage,
