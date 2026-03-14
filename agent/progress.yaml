@@ -2,7 +2,7 @@ project:
   name: agent-context-protocol-visualizer
   version: 0.1.0
   started: 2026-03-14
-  status: in_progress
+  status: completed
   current_milestone: milestone_2
   description: |
     Browser-based read-only dashboard for visualizing ACP progress.yaml data.
@@ -136,9 +136,9 @@ recent_work:
       - Created milestone and task documents
 
 next_steps:
-  - "Start M1: Initialize TanStack Start project (task-1)"
-  - "Implement data model and YAML parser (task-2)"
-  - "Build server API with SSR data loading (task-3)"
+  - "P0 complete — test with other ACP project progress.yaml files"
+  - "Point visualizer at remember-core via PROGRESS_YAML_PATH env var"
+  - "Plan P1 features: kanban view, activity timeline, GitHub remote loading"
 
 notes: []
 
