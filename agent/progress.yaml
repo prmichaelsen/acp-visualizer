@@ -23,11 +23,11 @@ milestones:
   - id: milestone_2
     name: Dashboard Views & Interaction
     status: in_progress
-    progress: 33
+    progress: 67
     started: "2026-03-14"
     completed: null
     estimated_weeks: "1.5"
-    tasks_completed: 2
+    tasks_completed: 4
     tasks_total: 6
     notes: P0 dashboard UI — table, tree, search, filtering
 
@@ -85,18 +85,18 @@ tasks:
 
     - id: task_7
       name: Implement Milestone Table View
-      status: not_started
+      status: completed
       file: agent/tasks/milestone-2-dashboard-views-interaction/task-7-implement-milestone-table-view.md
       estimated_hours: "3"
-      completed_date: null
+      completed_date: "2026-03-14"
       notes: "@tanstack/react-table with sorting, row expansion"
 
     - id: task_8
       name: Implement Milestone Tree View
-      status: not_started
+      status: completed
       file: agent/tasks/milestone-2-dashboard-views-interaction/task-8-implement-milestone-tree-view.md
       estimated_hours: "2"
-      completed_date: null
+      completed_date: "2026-03-14"
       notes: Expandable hierarchy, useCollapse animation
 
     - id: task_9
