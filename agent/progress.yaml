@@ -12,11 +12,11 @@ milestones:
   - id: milestone_1
     name: Project Scaffold & Data Pipeline
     status: in_progress
-    progress: 50
+    progress: 75
     started: "2026-03-14"
     completed: null
     estimated_weeks: "1"
-    tasks_completed: 2
+    tasks_completed: 3
     tasks_total: 4
     notes: Foundation milestone — all subsequent work depends on this data pipeline
 
@@ -52,10 +52,10 @@ tasks:
 
     - id: task_3
       name: Build Server API & Data Loading
-      status: not_started
+      status: completed
       file: agent/tasks/milestone-1-project-scaffold-data-pipeline/task-3-build-server-api-data-loading.md
       estimated_hours: "2"
-      completed_date: null
+      completed_date: "2026-03-14"
       notes: ProgressDatabaseService, beforeLoad SSR
 
     - id: task_4
