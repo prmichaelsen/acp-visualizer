@@ -186,6 +186,34 @@ milestones:
     expect(result.milestones[0].id).toBe('milestone_1')
   })
 
+  it('maps task keys to milestone IDs when formats differ', () => {
+    const yaml = `
+milestones:
+  - id: M1
+    name: First
+    status: completed
+  - id: M2
+    name: Second
+    status: in_progress
+
+tasks:
+  milestone_1:
+    - id: t1
+      name: Task A
+      status: completed
+  milestone_2:
+    - id: t2
+      name: Task B
+      status: in_progress
+`
+    const result = parseProgressYaml(yaml)
+    // Tasks keyed as milestone_1 should map to milestone ID M1
+    expect(result.tasks['M1']).toHaveLength(1)
+    expect(result.tasks['M1'][0].name).toBe('Task A')
+    expect(result.tasks['M2']).toHaveLength(1)
+    expect(result.tasks['M2'][0].name).toBe('Task B')
+  })
+
   it('handles null values in dates', () => {
     const yaml = `
 milestones:

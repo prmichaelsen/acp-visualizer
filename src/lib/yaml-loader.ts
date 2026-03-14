@@ -35,6 +35,7 @@ const TASK_ALIASES: Record<string, string> = {
   done_date: 'completed_date',
   filename: 'file',
   path: 'file',
+  document: 'file',
   milestone: 'milestone_id',
 }
 
@@ -171,12 +172,35 @@ function normalizeTask(raw: unknown, milestoneId: string, index: number): Task {
   }
 }
 
-function normalizeTasks(raw: unknown): Record<string, Task[]> {
+function normalizeTasks(raw: unknown, milestones: Milestone[]): Record<string, Task[]> {
   const result: Record<string, Task[]> = {}
   const obj = asRecord(raw)
-  for (const [milestoneId, tasks] of Object.entries(obj)) {
+
+  // Build a map from task key patterns to milestone IDs.
+  // Handles mismatch: tasks keyed as "milestone_1" but milestone.id = "M1"
+  const keyToMilestoneId = new Map<string, string>()
+  for (let i = 0; i < milestones.length; i++) {
+    const m = milestones[i]
+    // The task key might be the milestone ID itself, or "milestone_N"
+    keyToMilestoneId.set(m.id, m.id)
+    keyToMilestoneId.set(m.id.toLowerCase(), m.id)
+    keyToMilestoneId.set(`milestone_${i + 1}`, m.id)
+    // Also handle "milestone_N" where N matches the numeric part of "MN"
+    const numMatch = m.id.match(/(\d+)/)
+    if (numMatch) {
+      keyToMilestoneId.set(`milestone_${numMatch[1]}`, m.id)
+    }
+  }
+
+  for (const [rawKey, tasks] of Object.entries(obj)) {
     if (Array.isArray(tasks)) {
-      result[milestoneId] = tasks.map((t, i) => normalizeTask(t, milestoneId, i))
+      // Resolve the key to a milestone ID, or keep as-is
+      const milestoneId = keyToMilestoneId.get(rawKey) || rawKey
+      const existing = result[milestoneId] || []
+      result[milestoneId] = [
+        ...existing,
+        ...tasks.map((t, i) => normalizeTask(t, milestoneId, existing.length + i)),
+      ]
     }
   }
   return result
@@ -248,10 +272,12 @@ export function parseProgressYaml(raw: string): ProgressData {
     }
     const d = doc as Record<string, unknown>
 
+    const milestones = normalizeMilestones(d.milestones)
+
     return {
       project: normalizeProject(d.project),
-      milestones: normalizeMilestones(d.milestones),
-      tasks: normalizeTasks(d.tasks),
+      milestones,
+      tasks: normalizeTasks(d.tasks, milestones),
       recent_work: normalizeWorkEntries(d.recent_work),
       next_steps: normalizeStringArray(d.next_steps),
       notes: normalizeStringArray(d.notes),
