@@ -31,8 +31,7 @@ export const Route = createRootRoute({
       }
       projects = projectList
     } catch {
-      // Deployed on Cloudflare Workers — no local filesystem.
-      // Users load projects via GitHub input or URL params.
+      // Cloudflare Workers or other environment without filesystem
     }
 
     return { progressData, projects }

@@ -1,16 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { MilestoneTable } from '../components/MilestoneTable'
 import { MilestoneTree } from '../components/MilestoneTree'
 import { MilestoneKanban } from '../components/MilestoneKanban'
 import { MilestoneGantt } from '../components/MilestoneGantt'
-import { DependencyGraph } from '../components/DependencyGraph'
 import { ViewToggle, type ViewMode } from '../components/ViewToggle'
 import { FilterBar } from '../components/FilterBar'
 import { SearchInput } from '../components/SearchInput'
 import { useFilteredData } from '../lib/useFilteredData'
 import { useProgressData } from '../contexts/ProgressContext'
 import type { Status } from '../lib/types'
+
+// Lazy-load DependencyGraph to keep dagre out of the SSR bundle
+// (dagre uses CommonJS require() which fails on Cloudflare Workers)
+const DependencyGraph = lazy(() => import('../components/DependencyGraph').then(m => ({ default: m.DependencyGraph })))
 
 export const Route = createFileRoute('/milestones')({
   component: MilestonesPage,
@@ -55,7 +58,9 @@ function MilestonesPage() {
       ) : view === 'gantt' ? (
         <MilestoneGantt milestones={filtered.milestones} tasks={filtered.tasks} />
       ) : (
-        <DependencyGraph data={filtered} />
+        <Suspense fallback={<p className="text-gray-500 text-sm">Loading graph...</p>}>
+          <DependencyGraph data={filtered} />
+        </Suspense>
       )}
     </div>
   )
