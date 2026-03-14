@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { resolve, dirname } from 'path'
-import { existsSync } from 'fs'
+import { existsSync, cpSync, mkdirSync, rmSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { spawn } from 'child_process'
 
@@ -56,34 +56,56 @@ if (!existsSync(progressPath)) {
   process.exit(1)
 }
 
+// Strategy: copy source files into the node_modules root where deps
+// are hoisted. This gives vite a project root with node_modules as a
+// direct child, so ESM resolution works correctly for TanStack Start's
+// virtual modules.
+
+function findNodeModulesRoot() {
+  let dir = packageRoot
+  while (dir !== '/') {
+    const candidate = resolve(dir, 'node_modules')
+    if (existsSync(resolve(candidate, '.bin', 'vite'))) return dir
+    dir = resolve(dir, '..')
+  }
+  return packageRoot
+}
+
+const nmRoot = findNodeModulesRoot()
+const workDir = resolve(nmRoot, '.acp-visualizer-app')
+
+// Copy source files into workDir (small — ~60KB)
+rmSync(workDir, { recursive: true, force: true })
+mkdirSync(workDir, { recursive: true })
+cpSync(resolve(packageRoot, 'src'), resolve(workDir, 'src'), { recursive: true })
+cpSync(resolve(packageRoot, 'vite.config.ts'), resolve(workDir, 'vite.config.ts'))
+cpSync(resolve(packageRoot, 'tsconfig.json'), resolve(workDir, 'tsconfig.json'))
+cpSync(resolve(packageRoot, 'package.json'), resolve(workDir, 'package.json'))
+
+// Symlink the existing node_modules into the workdir
+// (they're one level up, so ../node_modules)
+const existingNM = resolve(nmRoot, 'node_modules')
+const targetNM = resolve(workDir, 'node_modules')
+if (!existsSync(targetNM)) {
+  const { symlinkSync } = await import('fs')
+  symlinkSync(existingNM, targetNM)
+}
+
+function cleanup() {
+  try { rmSync(workDir, { recursive: true, force: true }) } catch { /* best effort */ }
+}
+process.on('exit', cleanup)
+process.on('SIGINT', () => { cleanup(); process.exit(130) })
+process.on('SIGTERM', () => { cleanup(); process.exit(143) })
+
 console.log(`\n  ACP Progress Visualizer`)
 console.log(`  Loading: ${progressPath}`)
 console.log(`  Port:    ${port}\n`)
 
-// Resolve vite binary — check package's own node_modules first,
-// then walk up (npx hoists deps to a shared node_modules)
-function findViteBin() {
-  // Local development: package has its own node_modules
-  const local = resolve(packageRoot, 'node_modules', '.bin', 'vite')
-  if (existsSync(local)) return local
+const viteBin = resolve(workDir, 'node_modules', '.bin', 'vite')
 
-  // npx: deps hoisted — walk up from package root to find node_modules/.bin
-  let dir = packageRoot
-  while (dir !== '/') {
-    const candidate = resolve(dir, 'node_modules', '.bin', 'vite')
-    if (existsSync(candidate)) return candidate
-    dir = resolve(dir, '..')
-  }
-
-  // Fallback: hope it's on PATH
-  return 'vite'
-}
-
-const viteBin = findViteBin()
-
-// Start vite dev server from the package directory
 const child = spawn(viteBin, ['dev', '--port', port, '--host'], {
-  cwd: packageRoot,
+  cwd: workDir,
   stdio: 'inherit',
   env: {
     ...process.env,
@@ -93,13 +115,11 @@ const child = spawn(viteBin, ['dev', '--port', port, '--host'], {
 
 child.on('error', (err) => {
   console.error('Failed to start dev server:', err.message)
+  cleanup()
   process.exit(1)
 })
 
 child.on('exit', (code) => {
+  cleanup()
   process.exit(code ?? 0)
 })
-
-// Forward signals for clean shutdown
-process.on('SIGINT', () => child.kill('SIGINT'))
-process.on('SIGTERM', () => child.kill('SIGTERM'))
