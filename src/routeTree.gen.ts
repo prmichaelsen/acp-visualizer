@@ -9,9 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as MilestonesRouteImport } from './routes/milestones'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiWatchRouteImport } from './routes/api/watch'
 
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MilestonesRoute = MilestonesRouteImport.update({
+  id: '/milestones',
+  path: '/milestones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +43,65 @@ const ApiWatchRoute = ApiWatchRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/milestones': typeof MilestonesRoute
+  '/search': typeof SearchRoute
+  '/tasks': typeof TasksRoute
   '/api/watch': typeof ApiWatchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/milestones': typeof MilestonesRoute
+  '/search': typeof SearchRoute
+  '/tasks': typeof TasksRoute
   '/api/watch': typeof ApiWatchRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/milestones': typeof MilestonesRoute
+  '/search': typeof SearchRoute
+  '/tasks': typeof TasksRoute
   '/api/watch': typeof ApiWatchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/watch'
+  fullPaths: '/' | '/milestones' | '/search' | '/tasks' | '/api/watch'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/watch'
-  id: '__root__' | '/' | '/api/watch'
+  to: '/' | '/milestones' | '/search' | '/tasks' | '/api/watch'
+  id: '__root__' | '/' | '/milestones' | '/search' | '/tasks' | '/api/watch'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MilestonesRoute: typeof MilestonesRoute
+  SearchRoute: typeof SearchRoute
+  TasksRoute: typeof TasksRoute
   ApiWatchRoute: typeof ApiWatchRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/milestones': {
+      id: '/milestones'
+      path: '/milestones'
+      fullPath: '/milestones'
+      preLoaderRoute: typeof MilestonesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +121,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MilestonesRoute: MilestonesRoute,
+  SearchRoute: SearchRoute,
+  TasksRoute: TasksRoute,
   ApiWatchRoute: ApiWatchRoute,
 }
 export const routeTree = rootRouteImport
