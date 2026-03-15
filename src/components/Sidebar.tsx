@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { LayoutDashboard, Flag, CheckSquare, Clock, Search } from 'lucide-react'
+import { LayoutDashboard, Flag, CheckSquare, Clock, Search, PenTool, Puzzle, FileBarChart } from 'lucide-react'
 import { ProjectSelector } from './ProjectSelector'
 import { GitHubInput } from './GitHubInput'
 import type { AcpProject } from '../services/projects.service'
@@ -9,6 +9,9 @@ const navItems = [
   { to: '/milestones' as const, icon: Flag, label: 'Milestones' },
   { to: '/tasks' as const, icon: CheckSquare, label: 'Tasks' },
   { to: '/activity' as const, icon: Clock, label: 'Activity' },
+  { to: '/designs' as const, icon: PenTool, label: 'Designs' },
+  { to: '/patterns' as const, icon: Puzzle, label: 'Patterns' },
+  { to: '/reports' as const, icon: FileBarChart, label: 'Reports' },
 ]
 
 interface SidebarProps {

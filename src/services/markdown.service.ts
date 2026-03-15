@@ -115,6 +115,108 @@ async function fetchMarkdownFromGitHub(
   }
 }
 
+// ---------- listAgentDirectory ----------
+
+export type AgentFile = {
+  name: string
+  /** Relative path from project root, e.g. "agent/design/local.foo.md" */
+  relativePath: string
+}
+
+export type ListDirResult =
+  | { ok: true; files: AgentFile[] }
+  | { ok: false; files: []; error: string }
+
+export const listAgentDirectory = createServerFn({ method: 'GET' })
+  .inputValidator((input: { dirPath: string; github?: { owner: string; repo: string; branch?: string; token?: string } }) => input)
+  .handler(async ({ data: input }): Promise<ListDirResult> => {
+    if (input.github) {
+      return listDirFromGitHub(input.dirPath, input.github)
+    }
+    return listDirFromDisk(input.dirPath)
+  })
+
+async function listDirFromDisk(dirPath: string): Promise<ListDirResult> {
+  try {
+    const fs = await import('fs')
+    const path = await import('path')
+
+    const basePath = getBasePath()
+    const fullDir = path.resolve(basePath, dirPath)
+
+    if (!fs.existsSync(fullDir)) {
+      return { ok: false, files: [], error: `Directory not found: ${dirPath}` }
+    }
+
+    const entries = fs.readdirSync(fullDir)
+    const files: AgentFile[] = entries
+      .filter((f: string) => f.endsWith('.md') && !f.includes('template'))
+      .sort()
+      .map((f: string) => ({
+        name: f.replace(/\.md$/, ''),
+        relativePath: `${dirPath}/${f}`,
+      }))
+
+    return { ok: true, files }
+  } catch (err: any) {
+    return { ok: false, files: [], error: `Failed to list directory: ${dirPath}` }
+  }
+}
+
+async function listDirFromGitHub(
+  dirPath: string,
+  github: { owner: string; repo: string; branch?: string; token?: string },
+): Promise<ListDirResult> {
+  try {
+    let branch = github.branch
+    if (!branch) {
+      try {
+        const metaRes = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}`, {
+          headers: github.token ? { Authorization: `token ${github.token}` } : {},
+        })
+        if (metaRes.ok) {
+          const meta = (await metaRes.json()) as { default_branch?: string }
+          branch = meta.default_branch || 'main'
+        } else {
+          branch = 'main'
+        }
+      } catch {
+        branch = 'main'
+      }
+    }
+
+    const url = `https://api.github.com/repos/${github.owner}/${github.repo}/contents/${dirPath}?ref=${branch}`
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github.v3+json',
+    }
+    if (github.token) {
+      headers['Authorization'] = `token ${github.token}`
+    }
+
+    const response = await fetch(url, { headers })
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return { ok: true, files: [] }
+      }
+      return { ok: false, files: [], error: `GitHub returned ${response.status}` }
+    }
+
+    const entries = (await response.json()) as Array<{ name: string; path: string; type: string }>
+    const files: AgentFile[] = entries
+      .filter((e) => e.name.endsWith('.md') && !e.name.includes('template'))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((e) => ({
+        name: e.name.replace(/\.md$/, ''),
+        relativePath: e.path,
+      }))
+
+    return { ok: true, files }
+  } catch (err) {
+    return { ok: false, files: [], error: `Failed to list directory from GitHub` }
+  }
+}
+
 // ---------- resolveMilestoneFile ----------
 
 export const resolveMilestoneFile = createServerFn({ method: 'GET' })
