@@ -120,8 +120,8 @@ async function fetchMarkdownFromGitHub(
 export const resolveMilestoneFile = createServerFn({ method: 'GET' })
   .inputValidator((input: { milestoneId: string; github?: { owner: string; repo: string; branch?: string; token?: string } }) => input)
   .handler(async ({ data: input }): Promise<ResolveFileResult> => {
-    // Extract numeric part: "milestone_1" → "1"
-    const match = input.milestoneId.match(/milestone_(\d+)/)
+    // Extract numeric part: "milestone_1" → "1", "M2" → "2"
+    const match = input.milestoneId.match(/milestone_(\d+)/) || input.milestoneId.match(/^M(\d+)$/i)
     if (!match) {
       return { ok: false, filePath: null, error: `Invalid milestone id format: ${input.milestoneId}` }
     }
