@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
+import { PriorityBadge } from './PriorityBadge'
 import { ProgressBar } from './ProgressBar'
 import { TaskList } from './TaskList'
 import { useCollapse } from '../lib/useCollapse'
@@ -45,6 +46,7 @@ function MilestoneTreeRow({
           {milestone.name}
         </Link>
         <StatusBadge status={milestone.status} />
+        <PriorityBadge priority={milestone.priority} />
         <div className="w-20">
           <ProgressBar value={milestone.progress} size="sm" />
         </div>

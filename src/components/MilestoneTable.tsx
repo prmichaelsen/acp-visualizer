@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table'
 import { ChevronDown, ChevronRight, ArrowUpDown } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
+import { PriorityBadge } from './PriorityBadge'
 import { ProgressBar } from './ProgressBar'
 import { TaskList } from './TaskList'
 import type { Milestone, Task } from '../lib/types'
@@ -67,6 +68,11 @@ export function MilestoneTable({ milestones, tasks }: MilestoneTableProps) {
       header: 'Status',
       cell: (info) => <StatusBadge status={info.getValue()} />,
       size: 120,
+    }),
+    columnHelper.accessor('priority', {
+      header: 'Priority',
+      cell: (info) => <PriorityBadge priority={info.getValue()} />,
+      size: 100,
     }),
     columnHelper.accessor('progress', {
       header: 'Progress',

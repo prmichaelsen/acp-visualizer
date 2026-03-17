@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useProgressData } from '../contexts/ProgressContext'
 import { Breadcrumb } from '../components/Breadcrumb'
 import { DetailHeader } from '../components/DetailHeader'
+import { PriorityBadge } from '../components/PriorityBadge'
 import { MarkdownContent, buildLinkMap } from '../components/MarkdownContent'
 import { getMarkdownContent } from '../services/markdown.service'
 import { resolveTaskFile } from '../services/markdown.service'
@@ -94,8 +95,13 @@ function TaskDetailPage() {
     )
   }
 
+  const hoursDisplay = task.actual_hours != null
+    ? `Est: ${task.estimated_hours}h | Actual: ${task.actual_hours}h`
+    : `${task.estimated_hours}h`
+
   const fields = [
-    { label: 'Est', value: `${task.estimated_hours}h` },
+    { label: 'Est', value: hoursDisplay },
+    ...(task.started ? [{ label: 'Started', value: task.started }] : []),
     ...(task.completed_date ? [{ label: 'Completed', value: task.completed_date }] : []),
     {
       label: 'Milestone',
@@ -122,6 +128,10 @@ function TaskDetailPage() {
       />
 
       <h1 className="text-xl font-semibold text-gray-100 mb-3">{task.name}</h1>
+
+      <div className="flex items-center gap-2 mb-4">
+        <PriorityBadge priority={task.priority} />
+      </div>
 
       <DetailHeader status={task.status} fields={fields} />
 

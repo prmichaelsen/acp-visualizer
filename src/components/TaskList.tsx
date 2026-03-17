@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { StatusDot } from './StatusDot'
+import { PriorityBadge } from './PriorityBadge'
 import { ExtraFieldsBadge } from './ExtraFieldsBadge'
 import type { Task } from '../lib/types'
 
@@ -26,6 +27,7 @@ export function TaskList({ tasks }: { tasks: Task[] }) {
           >
             {task.name}
           </Link>
+          <PriorityBadge priority={task.priority} />
           {task.notes && (
             <span className="text-xs text-gray-600 ml-auto truncate max-w-[200px]">
               {task.notes}

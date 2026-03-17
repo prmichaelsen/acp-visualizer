@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { StatusBadge } from './StatusBadge'
+import { PriorityBadge } from './PriorityBadge'
 import { ProgressBar } from './ProgressBar'
 import { TaskList } from './TaskList'
 import type { Milestone, Task, Status } from '../lib/types'
@@ -37,6 +38,7 @@ function KanbanCard({
         >
           {milestone.name}
         </Link>
+        <PriorityBadge priority={milestone.priority} />
       </div>
       <div className="flex items-center gap-2 mb-2">
         <div className="flex-1">

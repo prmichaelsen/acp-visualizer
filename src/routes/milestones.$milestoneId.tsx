@@ -5,6 +5,7 @@ import { Breadcrumb } from '../components/Breadcrumb'
 import { DetailHeader } from '../components/DetailHeader'
 import { ProgressBar } from '../components/ProgressBar'
 import { StatusDot } from '../components/StatusDot'
+import { PriorityBadge } from '../components/PriorityBadge'
 import { MarkdownContent, buildLinkMap } from '../components/MarkdownContent'
 import { getMarkdownContent, resolveMilestoneFile } from '../services/markdown.service'
 import type { MarkdownResult, ResolveFileResult } from '../services/markdown.service'
@@ -105,6 +106,10 @@ function MilestoneDetailPage() {
         <span className="text-xs text-gray-500">{milestone.progress}%</span>
       </div>
 
+      <div className="flex items-center gap-2 mb-4">
+        <PriorityBadge priority={milestone.priority} />
+      </div>
+
       <DetailHeader status={milestone.status} fields={fields} />
 
       {milestone.notes && (
@@ -140,6 +145,7 @@ function MilestoneDetailPage() {
                 <span className={task.status === 'completed' ? 'text-gray-500' : 'text-gray-200'}>
                   {task.name}
                 </span>
+                <PriorityBadge priority={task.priority} />
                 {task.estimated_hours && (
                   <span className="text-xs text-gray-600 ml-auto">{task.estimated_hours}h</span>
                 )}
