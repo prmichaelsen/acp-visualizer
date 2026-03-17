@@ -1,4 +1,4 @@
-import { Eye } from 'lucide-react'
+import { PanelRight } from 'lucide-react'
 import { useSidePanel } from '../contexts/SidePanelContext'
 
 interface PreviewButtonProps {
@@ -27,7 +27,7 @@ export function PreviewButton({ type, id, className = '' }: PreviewButtonProps) 
       title={`Preview ${type}`}
       aria-label={`Preview ${type}`}
     >
-      <Eye className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
+      <PanelRight className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
     </button>
   )
 }
