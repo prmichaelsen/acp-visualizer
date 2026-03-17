@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.2] - 2026-03-17
+
+### Fixed
+- Side panel icons now always visible (removed hover-only behavior)
+- Side panel now properly closes when clicking "Open full view" button
+- Replaced external link icon with maximize icon for better semantic meaning
+- Fixed visual flash on side panel initial render by simplifying translate classes
+
 ## [0.8.1] - 2026-03-15
 
 ### Fixed
