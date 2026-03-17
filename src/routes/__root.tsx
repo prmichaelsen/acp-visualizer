@@ -63,8 +63,8 @@ function NotFound() {
   return (
     <div className="flex items-center justify-center h-full">
       <div className="text-center">
-        <h2 className="text-xl font-semibold text-gray-200 mb-2">Page Not Found</h2>
-        <p className="text-sm text-gray-400">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">Page Not Found</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           The page you're looking for doesn't exist.
         </p>
       </div>
@@ -154,7 +154,7 @@ function RootLayout() {
   return (
     <>
       <AutoRefresh />
-      <div className="flex h-screen bg-gray-950 text-gray-100">
+      <div className="flex h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
         <Sidebar
           projects={context.projects}
           currentProject={currentProject}
@@ -164,7 +164,7 @@ function RootLayout() {
         <ProgressProvider data={progressData}>
           <div className="flex-1 flex flex-col overflow-hidden">
             <Header data={progressData} />
-            <main className="flex-1 overflow-auto">
+            <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
               <Outlet />
             </main>
           </div>

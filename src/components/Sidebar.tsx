@@ -25,9 +25,9 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect,
   const location = useRouterState({ select: (s) => s.location })
 
   return (
-    <nav className="w-56 border-r border-gray-800 bg-gray-950 flex flex-col shrink-0">
-      <div className="p-4 border-b border-gray-800">
-        <span className="text-sm font-semibold text-gray-300 tracking-wide">
+    <nav className="w-56 border-r border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950 flex flex-col shrink-0">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">
           ACP Visualizer
         </span>
       </div>
@@ -53,8 +53,8 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect,
               to={item.to}
               className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
                 isActive
-                  ? 'text-gray-100 bg-gray-800/50'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/30'
+                  ? 'text-gray-900 dark:text-gray-100 bg-gray-200 dark:bg-gray-800/50'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-200/50 dark:hover:bg-gray-800/30'
               }`}
             >
               <item.icon className="w-4 h-4" />
@@ -63,10 +63,10 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect,
           )
         })}
       </div>
-      <div className="p-3 border-t border-gray-800 space-y-2">
+      <div className="p-3 border-t border-gray-200 dark:border-gray-800 space-y-2">
         <Link
           to="/search"
-          className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-500 bg-gray-900 border border-gray-800 rounded-md hover:text-gray-300 hover:border-gray-600 transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-500 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md hover:text-gray-900 dark:hover:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
         >
           <Search className="w-4 h-4" />
           Search...
