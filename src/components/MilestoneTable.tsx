@@ -12,6 +12,7 @@ import { ChevronDown, ChevronRight, ArrowUpDown } from 'lucide-react'
 import { StatusBadge } from './StatusBadge'
 import { PriorityBadge } from './PriorityBadge'
 import { ProgressBar } from './ProgressBar'
+import { PreviewButton } from './PreviewButton'
 import { TaskList } from './TaskList'
 import type { Milestone, Task } from '../lib/types'
 
@@ -54,14 +55,17 @@ export function MilestoneTable({ milestones, tasks }: MilestoneTableProps) {
     columnHelper.accessor('name', {
       header: 'Milestone',
       cell: (info) => (
-        <Link
-          to="/milestones/$milestoneId"
-          params={{ milestoneId: info.row.original.id }}
-          className="text-sm font-medium text-gray-200 hover:text-blue-400 transition-colors"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {info.getValue()}
-        </Link>
+        <div className="flex items-center gap-2 group">
+          <Link
+            to="/milestones/$milestoneId"
+            params={{ milestoneId: info.row.original.id }}
+            className="text-sm font-medium text-gray-900 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {info.getValue()}
+          </Link>
+          <PreviewButton type="milestone" id={info.row.original.id} />
+        </div>
       ),
     }),
     columnHelper.accessor('status', {

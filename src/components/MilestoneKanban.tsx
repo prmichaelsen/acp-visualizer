@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { StatusBadge } from './StatusBadge'
 import { PriorityBadge } from './PriorityBadge'
 import { ProgressBar } from './ProgressBar'
+import { PreviewButton } from './PreviewButton'
 import { TaskList } from './TaskList'
 import type { Milestone, Task, Status } from '../lib/types'
 import { useState } from 'react'
@@ -29,15 +30,18 @@ function KanbanCard({
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-3 hover:border-gray-700 transition-colors">
+    <div className="bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-colors group">
       <div className="flex items-start justify-between gap-2 mb-2">
-        <Link
-          to="/milestones/$milestoneId"
-          params={{ milestoneId: milestone.id }}
-          className="text-sm font-medium leading-tight hover:text-blue-400 transition-colors"
-        >
-          {milestone.name}
-        </Link>
+        <div className="flex items-center gap-2 flex-1">
+          <Link
+            to="/milestones/$milestoneId"
+            params={{ milestoneId: milestone.id }}
+            className="text-sm font-medium leading-tight text-gray-900 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+          >
+            {milestone.name}
+          </Link>
+          <PreviewButton type="milestone" id={milestone.id} />
+        </div>
         <PriorityBadge priority={milestone.priority} />
       </div>
       <div className="flex items-center gap-2 mb-2">

@@ -3,12 +3,14 @@ import { useState, useCallback, useEffect } from 'react'
 import { useAutoRefresh } from '../lib/useAutoRefresh'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
+import { SidePanel } from '../components/SidePanel'
 import { getProgressData } from '../services/progress-database.service'
 import { listProjects, getProjectProgressPath } from '../services/projects.service'
 import { fetchGitHubProgress } from '../services/github.service'
 import type { ProgressData } from '../lib/types'
 import type { AcpProject } from '../services/projects.service'
 import { ProgressProvider } from '../contexts/ProgressContext'
+import { SidePanelProvider } from '../contexts/SidePanelContext'
 
 import appCss from '../styles.css?url'
 
@@ -162,12 +164,15 @@ function RootLayout() {
           onGitHubLoad={handleGitHubLoad}
         />
         <ProgressProvider data={progressData}>
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <Header data={progressData} />
-            <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-              <Outlet />
-            </main>
-          </div>
+          <SidePanelProvider>
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <Header data={progressData} />
+              <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+                <Outlet />
+              </main>
+            </div>
+            <SidePanel />
+          </SidePanelProvider>
         </ProgressProvider>
       </div>
     </>
