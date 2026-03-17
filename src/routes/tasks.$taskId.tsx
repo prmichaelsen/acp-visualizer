@@ -119,7 +119,7 @@ function TaskDetailPage() {
   ]
 
   return (
-    <div className="p-6 max-w-4xl">
+    <div className="p-4 lg:p-6 max-w-4xl">
       <Breadcrumb
         items={[
           { label: 'Milestones', href: '/milestones' },
@@ -128,7 +128,7 @@ function TaskDetailPage() {
         ]}
       />
 
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{formatTaskName(task)}</h1>
+      <h1 className="text-lg lg:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{formatTaskName(task)}</h1>
 
       <div className="flex items-center gap-2 mb-4">
         <PriorityBadge priority={task.priority} />
@@ -153,12 +153,12 @@ function TaskDetailPage() {
 
       {/* Prev / Next navigation */}
       {(siblings.prev || siblings.next) && (
-        <div className="mt-8 flex items-center justify-between border-t border-gray-200 dark:border-gray-800 pt-4">
+        <div className="mt-8 flex items-center justify-between gap-4 border-t border-gray-200 dark:border-gray-800 pt-4">
           {siblings.prev ? (
             <Link
               to="/tasks/$taskId"
               params={{ taskId: siblings.prev.id }}
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors truncate"
             >
               ← {formatTaskName(siblings.prev)}
             </Link>
@@ -169,7 +169,7 @@ function TaskDetailPage() {
             <Link
               to="/tasks/$taskId"
               params={{ taskId: siblings.next.id }}
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors truncate text-right"
             >
               {formatTaskName(siblings.next)} →
             </Link>

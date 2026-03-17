@@ -90,7 +90,7 @@ function MilestoneDetailPage() {
   ]
 
   return (
-    <div className="p-6 max-w-4xl">
+    <div className="p-4 lg:p-6 max-w-4xl">
       <Breadcrumb
         items={[
           { label: 'Milestones', href: '/milestones' },
@@ -98,7 +98,7 @@ function MilestoneDetailPage() {
         ]}
       />
 
-      <h1 className="text-xl font-semibold text-gray-100 dark:text-gray-100 mb-3">{formatMilestoneName(milestone)}</h1>
+      <h1 className="text-lg lg:text-xl font-semibold text-gray-100 dark:text-gray-100 mb-3">{formatMilestoneName(milestone)}</h1>
 
       <div className="flex items-center gap-3 mb-4">
         <div className="flex-1 max-w-xs">

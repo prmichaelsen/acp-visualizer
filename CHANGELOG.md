@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.9.3] - 2026-03-17
+
+### Added
+- Mobile responsive MVP implementation
+- Mobile drawer navigation with hamburger menu button
+- Mobile card view for milestone table (replaces desktop table on small screens)
+- Mobile-optimized header with responsive spacing and element visibility
+- Full-screen side panel on mobile devices
+
+### Changed
+- Header padding adjusted to accommodate mobile menu button (pl-16 on mobile)
+- Detail pages now use responsive padding (p-4 on mobile, p-6 on desktop)
+- Task prev/next navigation now includes gap and truncate for better mobile UX
+- Sidebar now slides in as drawer on mobile with backdrop overlay
+
 ## [0.9.2] - 2026-03-17
 
 ### Fixed

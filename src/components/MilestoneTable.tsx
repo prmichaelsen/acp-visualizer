@@ -36,6 +36,63 @@ export function MilestoneTable({ milestones, tasks }: MilestoneTableProps) {
     })
   }
 
+  // Mobile card view
+  const MobileCard = ({ milestone }: { milestone: Milestone }) => {
+    const milestoneTasks = tasks[milestone.id] || []
+    const isExpanded = expanded.has(milestone.id)
+
+    return (
+      <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 space-y-3">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <Link
+              to="/milestones/$milestoneId"
+              params={{ milestoneId: milestone.id }}
+              className="text-sm font-medium text-gray-900 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400"
+            >
+              {formatMilestoneName(milestone)}
+            </Link>
+          </div>
+          <PreviewButton type="milestone" id={milestone.id} />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <StatusBadge status={milestone.status} />
+          <PriorityBadge priority={milestone.priority} />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="flex-1">
+            <ProgressBar value={milestone.progress} size="sm" />
+          </div>
+          <span className="text-xs text-gray-600 dark:text-gray-500 font-mono">{milestone.progress}%</span>
+        </div>
+
+        <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-500">
+          <span>Tasks: {milestone.tasks_completed}/{milestone.tasks_total}</span>
+          {milestoneTasks.length > 0 && (
+            <button
+              onClick={() => toggle(milestone.id)}
+              className="flex items-center gap-1 hover:text-gray-900 dark:hover:text-gray-300"
+            >
+              {isExpanded ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
+            </button>
+          )}
+        </div>
+
+        {isExpanded && milestoneTasks.length > 0 && (
+          <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+            <TaskList tasks={milestoneTasks} />
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const columns = [
     columnHelper.display({
       id: 'expand',
@@ -135,8 +192,17 @@ export function MilestoneTable({ milestones, tasks }: MilestoneTableProps) {
   }
 
   return (
-    <div className="border border-gray-800 rounded-lg overflow-hidden">
-      <table className="w-full">
+    <>
+      {/* Mobile Card View */}
+      <div className="lg:hidden space-y-3">
+        {milestones.map((milestone) => (
+          <MobileCard key={milestone.id} milestone={milestone} />
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden lg:block border border-gray-800 rounded-lg overflow-hidden">
+        <table className="w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} className="border-b border-gray-800 bg-gray-900/50">
@@ -181,6 +247,7 @@ export function MilestoneTable({ milestones, tasks }: MilestoneTableProps) {
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </>
   )
 }

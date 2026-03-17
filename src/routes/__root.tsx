@@ -1,5 +1,6 @@
 import { HeadContent, Scripts, createRootRoute, Outlet, useRouter, useRouterState } from '@tanstack/react-router'
 import { useState, useCallback, useEffect } from 'react'
+import { Menu, X } from 'lucide-react'
 import { useAutoRefresh } from '../lib/useAutoRefresh'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
@@ -109,6 +110,7 @@ function RootLayout() {
     context.progressData?.project.name || null,
   )
   const [initialLoadDone, setInitialLoadDone] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // On mount, check for ?repo= param and auto-load
   useEffect(() => {
@@ -157,21 +159,51 @@ function RootLayout() {
     <>
       <AutoRefresh />
       <div className="flex h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-        <Sidebar
-          projects={context.projects}
-          currentProject={currentProject}
-          onProjectSelect={handleProjectSwitch}
-          onGitHubLoad={handleGitHubLoad}
-        />
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg"
+          aria-label="Open menu"
+        >
+          <Menu className="w-5 h-5 text-gray-900 dark:text-gray-100" />
+        </button>
+
+        {/* Mobile Backdrop */}
+        {mobileMenuOpen && (
+          <div
+            className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Sidebar - Desktop: Always visible | Mobile: Drawer */}
+        <div
+          className={`fixed lg:relative inset-y-0 left-0 z-50 transition-transform duration-300 lg:translate-x-0 ${
+            mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <Sidebar
+            projects={context.projects}
+            currentProject={currentProject}
+            onProjectSelect={handleProjectSwitch}
+            onGitHubLoad={handleGitHubLoad}
+            onClose={() => setMobileMenuOpen(false)}
+          />
+        </div>
+
         <ProgressProvider data={progressData}>
           <SidePanelProvider>
-            <div className="flex-1 flex flex-col overflow-hidden">
-              <Header data={progressData} />
-              <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-                <Outlet />
-              </main>
+            <div className="flex-1 flex overflow-hidden">
+              {/* Main content area */}
+              <div className="flex-1 flex flex-col overflow-hidden">
+                <Header data={progressData} />
+                <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+                  <Outlet />
+                </main>
+              </div>
+              {/* Side panel - renders in flex layout, not overlay */}
+              <SidePanel />
             </div>
-            <SidePanel />
           </SidePanelProvider>
         </ProgressProvider>
       </div>

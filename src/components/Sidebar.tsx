@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { LayoutDashboard, Flag, CheckSquare, Clock, Search, PenTool, Puzzle, FileBarChart } from 'lucide-react'
+import { LayoutDashboard, Flag, CheckSquare, Clock, Search, PenTool, Puzzle, FileBarChart, X } from 'lucide-react'
 import { ProjectSelector } from './ProjectSelector'
 import { GitHubInput } from './GitHubInput'
 import type { AcpProject } from '../services/projects.service'
@@ -19,17 +19,27 @@ interface SidebarProps {
   currentProject?: string | null
   onProjectSelect?: (projectId: string) => void
   onGitHubLoad?: (owner: string, repo: string) => Promise<void>
+  onClose?: () => void
 }
 
-export function Sidebar({ projects = [], currentProject = null, onProjectSelect, onGitHubLoad }: SidebarProps) {
+export function Sidebar({ projects = [], currentProject = null, onProjectSelect, onGitHubLoad, onClose }: SidebarProps) {
   const location = useRouterState({ select: (s) => s.location })
 
   return (
-    <nav className="w-56 border-r border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950 flex flex-col shrink-0">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+    <nav className="w-56 h-full border-r border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950 flex flex-col shrink-0">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
         <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">
           ACP Visualizer
         </span>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="lg:hidden p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+          </button>
+        )}
       </div>
       {projects.length > 1 && onProjectSelect && (
         <div className="px-3 pt-3">

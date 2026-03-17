@@ -14,15 +14,18 @@ export function Header({ data }: HeaderProps) {
   if (!data) return null
 
   return (
-    <header className="h-14 border-b border-gray-200 dark:border-gray-800 flex items-center px-6 gap-4 shrink-0 bg-white dark:bg-gray-950">
-      <h1 className="text-sm font-medium text-gray-900 dark:text-gray-200">{data.project.name}</h1>
-      <span className="text-xs text-gray-500 dark:text-gray-500 font-mono">v{data.project.version}</span>
-      <StatusBadge status={data.project.status} />
-      <div className="ml-auto flex items-center gap-4">
-        <div className="flex items-center gap-3 w-48">
+    <header className="h-14 border-b border-gray-200 dark:border-gray-800 flex items-center pl-16 lg:pl-6 pr-4 lg:pr-6 gap-2 lg:gap-4 shrink-0 bg-white dark:bg-gray-950">
+      <h1 className="text-sm font-medium text-gray-900 dark:text-gray-200 truncate">{data.project.name}</h1>
+      <span className="hidden sm:inline text-xs text-gray-500 dark:text-gray-500 font-mono">v{data.project.version}</span>
+      <div className="hidden sm:block">
+        <StatusBadge status={data.project.status} />
+      </div>
+      <div className="ml-auto flex items-center gap-2 lg:gap-4">
+        <div className="hidden md:flex items-center gap-3 w-32 lg:w-48">
           <ProgressBar value={data.progress.overall} size="sm" />
           <span className="text-xs text-gray-600 dark:text-gray-400 font-mono">{data.progress.overall}%</span>
         </div>
+        <span className="md:hidden text-xs text-gray-600 dark:text-gray-400 font-mono">{data.progress.overall}%</span>
         <button
           onClick={toggleTheme}
           className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
