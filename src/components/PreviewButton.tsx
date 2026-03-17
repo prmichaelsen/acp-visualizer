@@ -23,7 +23,7 @@ export function PreviewButton({ type, id, className = '' }: PreviewButtonProps) 
   return (
     <button
       onClick={handleClick}
-      className={`p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors opacity-0 group-hover:opacity-100 ${className}`}
+      className={`p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${className}`}
       title={`Preview ${type}`}
       aria-label={`Preview ${type}`}
     >
