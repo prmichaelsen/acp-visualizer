@@ -2,8 +2,8 @@ project:
   name: agent-context-protocol-visualizer
   version: 0.8.1
   started: 2026-03-14
-  status: completed
-  current_milestone: milestone_3
+  status: in_progress
+  current_milestone: milestone_4
   description: |
     Browser-based read-only dashboard for visualizing ACP progress.yaml data.
     TanStack Start app with table/tree/kanban views, search, filtering, and auto-refresh.
@@ -42,6 +42,17 @@ milestones:
     tasks_completed: 4
     tasks_total: 4
     notes: P1 — clickable milestone/task detail pages with markdown rendering
+
+  - id: milestone_4
+    name: ACP 6.0.0 Compatibility Update
+    status: not_started
+    progress: 0
+    started: null
+    completed: null
+    estimated_weeks: "0.5"
+    tasks_completed: 0
+    tasks_total: 3
+    notes: Update parser and UI to handle ACP 6.0.0 map-based milestones, priority field
 
 tasks:
   milestone_1:
@@ -159,18 +170,56 @@ tasks:
       completed_date: "2026-03-14"
       notes: Make titles clickable links in table, tree, kanban, and task list views
 
+  milestone_4:
+    - id: task_15
+      name: Update Data Model and Parser for Map-Based Milestones
+      status: not_started
+      started: null
+      file: agent/tasks/milestone-4-acp-6-compatibility/task-15-update-data-model-and-parser.md
+      estimated_hours: "3-4"
+      actual_hours: null
+      completed_date: null
+      notes: Map-based milestones, priority field, backward compat
+
+    - id: task_16
+      name: Update UI for Priority Display
+      status: not_started
+      started: null
+      file: agent/tasks/milestone-4-acp-6-compatibility/task-16-update-ui-for-priority-display.md
+      estimated_hours: "2-3"
+      actual_hours: null
+      completed_date: null
+      notes: PriorityBadge component, table/tree/kanban/detail integration
+
+    - id: task_17
+      name: Migrate Visualizer progress.yaml to v6 Format
+      status: not_started
+      started: null
+      file: agent/tasks/milestone-4-acp-6-compatibility/task-17-migrate-progress-yaml-to-v6.md
+      estimated_hours: "1-2"
+      actual_hours: null
+      completed_date: null
+      notes: Convert own progress.yaml to map format, add priority fields
+
 documentation:
   design_documents: 7
-  milestone_documents: 3
+  milestone_documents: 4
   pattern_documents: 42
-  task_documents: 14
+  task_documents: 17
 
 progress:
   planning: 100
-  implementation: 100
-  overall: 100
+  implementation: 82
+  overall: 82
 
 recent_work:
+  - date: "2026-03-17"
+    description: "M4 planned: ACP 6.0.0 compatibility update"
+    items:
+      - "Created milestone-4-acp-6-compatibility.md"
+      - "Created task-15 (data model + parser), task-16 (UI priority), task-17 (migrate progress.yaml)"
+      - "Driven by ACP 6.0.0 breaking changes: map milestones, normalized keys, priority field"
+
   - date: "2026-03-14"
     description: "M3 complete: detail views with markdown rendering"
     items:
@@ -207,9 +256,10 @@ recent_work:
       - Created milestone and task documents
 
 next_steps:
-  - "M3 complete — test detail views with remember-core progress.yaml"
+  - "M4: Task 15 — update types.ts and yaml-loader.ts for v6 format"
+  - "M4: Task 16 — add PriorityBadge and integrate into all views"
+  - "M4: Task 17 — migrate own progress.yaml to v6 map format"
   - "Plan P2 features: Gantt timeline, task dependencies"
-  - "Consider P1 additions: activity timeline detail, design doc views"
 
 notes: []
 
