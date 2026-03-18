@@ -90,10 +90,11 @@ export function MilestoneKanban({ milestones, tasks }: MilestoneKanbanProps) {
       coreStatuses.has(col.status) ||
       milestones.some((m) => m.status === col.status),
   )
-  const gridCols =
-    activeColumns.length <= 3
-      ? 'grid-cols-3'
-      : 'grid-cols-4'
+
+  // Responsive grid: 1 col mobile, 2 cols tablet, 3-4 cols desktop
+  const gridCols = activeColumns.length <= 3
+    ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
 
   return (
     <div className={`grid ${gridCols} gap-4 min-h-[300px]`}>

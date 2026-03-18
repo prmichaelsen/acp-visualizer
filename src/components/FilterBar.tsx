@@ -15,12 +15,12 @@ interface FilterBarProps {
 
 export function FilterBar({ status, onStatusChange }: FilterBarProps) {
   return (
-    <div className="flex gap-1 p-1 bg-gray-800/50 rounded-lg">
+    <div className="flex flex-wrap gap-2 p-2 bg-gray-800/50 rounded-lg">
       {statusOptions.map((opt) => (
         <button
           key={opt.value}
           onClick={() => onStatusChange(opt.value)}
-          className={`px-3 py-1 text-xs rounded-md transition-colors ${
+          className={`px-4 py-2 text-sm rounded-md transition-colors whitespace-nowrap min-w-[44px] min-h-[44px] flex items-center justify-center ${
             status === opt.value
               ? 'bg-gray-700 text-gray-100 shadow-sm'
               : 'text-gray-500 hover:text-gray-300'

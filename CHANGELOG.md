@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.10.0] - 2026-03-18
+
+### Added
+- Mobile-responsive ViewToggle with horizontal scroll and 44px touch targets
+- Mobile-responsive FilterBar with button wrapping on small screens
+- Responsive Kanban columns (1 col mobile, 2 cols tablet, 3-4 cols desktop)
+
+### Changed
+- ViewToggle buttons increased from text-xs to text-sm for better readability
+- FilterBar buttons now wrap to multiple rows on mobile instead of single row
+- Kanban view now stacks vertically on mobile, progressively showing more columns on larger screens
+- All button touch targets increased to minimum 44x44px for mobile usability
+
 ## [0.9.5] - 2026-03-18
 
 ### Changed
