@@ -124,7 +124,7 @@ export type AgentFile = {
 }
 
 export type ListDirResult =
-  | { ok: true; files: AgentFile[] }
+  | { ok: true; files: AgentFile[]; directoryExists?: boolean }
   | { ok: false; files: []; error: string }
 
 export const listAgentDirectory = createServerFn({ method: 'GET' })
@@ -197,7 +197,7 @@ async function listDirFromGitHub(
 
     if (!response.ok) {
       if (response.status === 404) {
-        return { ok: true, files: [] }
+        return { ok: true, files: [], directoryExists: false }
       }
       return { ok: false, files: [], error: `GitHub returned ${response.status}` }
     }

@@ -15,13 +15,16 @@ export function DocumentList({ title, dirPath, baseTo, github }: DocumentListPro
   const [files, setFiles] = useState<AgentFile[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [directoryExists, setDirectoryExists] = useState(true)
 
   useEffect(() => {
     setLoading(true)
+    setDirectoryExists(true)
     listAgentDirectory({ data: { dirPath, github } })
       .then((result) => {
         if (result.ok) {
           setFiles(result.files)
+          setDirectoryExists(result.directoryExists !== false)
         } else {
           setError(result.error)
         }
@@ -54,7 +57,18 @@ export function DocumentList({ title, dirPath, baseTo, github }: DocumentListPro
     return (
       <div className="p-6">
         <h2 className="text-lg font-semibold mb-4">{title}</h2>
-        <p className="text-sm text-gray-500">No documents found in <code className="text-gray-400">{dirPath}/</code></p>
+        {!directoryExists && github ? (
+          <div className="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-4">
+            <p className="text-sm text-yellow-300 mb-2">
+              Directory <code className="text-yellow-400 bg-yellow-900/30 px-1.5 py-0.5 rounded">{dirPath}/</code> not found in this repository.
+            </p>
+            <p className="text-xs text-yellow-400/80">
+              This repository may not follow the standard ACP structure. You can create this directory and add .md files to populate this section.
+            </p>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">No documents found in <code className="text-gray-400">{dirPath}/</code></p>
+        )}
       </div>
     )
   }
