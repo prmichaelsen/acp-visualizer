@@ -8,16 +8,23 @@ type PanelContent =
 interface SidePanelContextValue {
   content: PanelContent
   isOpen: boolean
+  width: number
   openMilestone: (id: string) => void
   openTask: (id: string) => void
   close: () => void
+  setWidth: (width: number) => void
 }
 
 const SidePanelContext = createContext<SidePanelContextValue | undefined>(undefined)
 
+const MIN_WIDTH = 300
+const MAX_WIDTH = 800
+const DEFAULT_WIDTH = 500
+
 export function SidePanelProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<PanelContent>(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [width, setWidthState] = useState(DEFAULT_WIDTH)
 
   const openMilestone = (id: string) => {
     setContent({ type: 'milestone', id })
@@ -34,8 +41,13 @@ export function SidePanelProvider({ children }: { children: ReactNode }) {
     setTimeout(() => setContent(null), 300) // Wait for animation
   }
 
+  const setWidth = (newWidth: number) => {
+    const clampedWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, newWidth))
+    setWidthState(clampedWidth)
+  }
+
   return (
-    <SidePanelContext.Provider value={{ content, isOpen, openMilestone, openTask, close }}>
+    <SidePanelContext.Provider value={{ content, isOpen, width, openMilestone, openTask, close, setWidth }}>
       {children}
     </SidePanelContext.Provider>
   )

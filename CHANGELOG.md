@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.12.0] - 2026-03-18
+
+### Added
+- Draggable, resizable sidepanel with push-content layout
+- Resize handle on left edge of sidepanel with visual feedback
+- Width persistence during session (300-800px range)
+- Smooth transition animations for panel open/close
+
+### Changed
+- Sidepanel no longer overlays content but pushes main area to the left
+- Removed backdrop overlay in favor of integrated document flow
+- Panel width is now user-adjustable via drag interaction
+
+### Fixed
+- React hooks violation by moving conditional return after all hooks
+
 ## [0.11.1] - 2026-03-18
 
 ### Added

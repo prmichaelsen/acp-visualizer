@@ -1,6 +1,6 @@
 project:
   name: agent-context-protocol-visualizer
-  version: 0.8.1
+  version: 0.12.0
   started: 2026-03-14
   status: completed
   current_milestone: M4
@@ -233,6 +233,14 @@ progress:
   overall: 100
 
 recent_work:
+  - date: "2026-03-18"
+    description: "Quick initialization: agent context loaded"
+    items:
+      - "Registered session sess_6b2a23"
+      - "Read progress.yaml, design documents, milestones, and key files from index"
+      - "Loaded 26 ACP projects from global registry"
+      - "All 4 milestones completed (M1-M4), project at 100% completion"
+
   - date: "2026-03-17"
     description: "M4 complete: ACP 6.0.0 compatibility update"
     items:
