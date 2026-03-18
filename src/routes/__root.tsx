@@ -112,6 +112,7 @@ function RootLayout() {
   )
   const [initialLoadDone, setInitialLoadDone] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   // On mount, check for ?repo= param and auto-load
   useEffect(() => {
@@ -196,6 +197,8 @@ function RootLayout() {
             onProjectSelect={handleProjectSwitch}
             onGitHubLoad={handleGitHubLoad}
             onClose={() => setMobileMenuOpen(false)}
+            isCollapsed={sidebarCollapsed}
+            onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
           />
         </div>
 

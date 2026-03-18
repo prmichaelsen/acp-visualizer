@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { LayoutDashboard, Flag, CheckSquare, Clock, Search, PenTool, Puzzle, FileBarChart, Github, X } from 'lucide-react'
+import { LayoutDashboard, Flag, CheckSquare, Clock, Search, PenTool, Puzzle, FileBarChart, Github, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { ProjectSelector } from './ProjectSelector'
 import { GitHubInput } from './GitHubInput'
 import { GitHubAuth } from './GitHubAuth'
@@ -22,28 +22,50 @@ interface SidebarProps {
   onProjectSelect?: (projectId: string) => void
   onGitHubLoad?: (owner: string, repo: string) => Promise<void>
   onClose?: () => void
+  isCollapsed?: boolean
+  onToggleCollapse?: () => void
 }
 
-export function Sidebar({ projects = [], currentProject = null, onProjectSelect, onGitHubLoad, onClose }: SidebarProps) {
+export function Sidebar({ projects = [], currentProject = null, onProjectSelect, onGitHubLoad, onClose, isCollapsed = false, onToggleCollapse }: SidebarProps) {
   const location = useRouterState({ select: (s) => s.location })
 
   return (
-    <nav className="w-full lg:w-56 h-auto max-h-[80vh] lg:h-full border-t lg:border-t-0 lg:border-r border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950 flex flex-col shrink-0 rounded-t-2xl lg:rounded-none overflow-y-auto">
+    <nav className={`w-full h-auto max-h-[80vh] lg:h-full border-t lg:border-t-0 lg:border-r border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-950 flex flex-col shrink-0 rounded-t-2xl lg:rounded-none overflow-y-auto transition-all duration-300 ${
+      isCollapsed ? 'lg:w-16' : 'lg:w-56'
+    }`}>
       <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
-        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">
-          ACP Visualizer
-        </span>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-4 h-4 text-gray-700 dark:text-gray-300" />
-          </button>
+        {!isCollapsed && (
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 tracking-wide">
+            ACP Visualizer
+          </span>
         )}
+        <div className="flex items-center gap-2">
+          {onToggleCollapse && (
+            <button
+              onClick={onToggleCollapse}
+              className="hidden lg:block p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              {isCollapsed ? (
+                <ChevronRight className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <ChevronLeft className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
+          )}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="lg:hidden p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+            </button>
+          )}
+        </div>
       </div>
-      {projects.length > 1 && onProjectSelect && (
+      {projects.length > 1 && onProjectSelect && !isCollapsed && (
         <div className="px-3 pt-3">
           <ProjectSelector
             projects={projects}
@@ -63,34 +85,39 @@ export function Sidebar({ projects = [], currentProject = null, onProjectSelect,
             <Link
               key={item.to}
               to={item.to}
-              className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
+              className={`flex items-center gap-3 py-2 text-sm transition-colors ${
+                isCollapsed ? 'px-4 justify-center' : 'px-4'
+              } ${
                 isActive
                   ? 'text-gray-900 dark:text-gray-100 bg-gray-200 dark:bg-gray-800/50'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-200/50 dark:hover:bg-gray-800/30'
               }`}
               onClick={onClose}
+              title={isCollapsed ? item.label : undefined}
             >
               <item.icon className="w-4 h-4" />
-              {item.label}
+              {!isCollapsed && item.label}
             </Link>
           )
         })}
       </div>
-      <hr className="border-gray-200 dark:border-gray-800" />
-      <div className="p-3 space-y-2">
-        <Link
-          to="/search"
-          className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-500 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md hover:text-gray-900 dark:hover:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
-          onClick={onClose}
-        >
-          <Search className="w-4 h-4" />
-          Search...
-        </Link>
-        <GitHubAuth />
-        {onGitHubLoad && (
-          <GitHubInput onLoad={onGitHubLoad} />
-        )}
-      </div>
+      {!isCollapsed && <hr className="border-gray-200 dark:border-gray-800" />}
+      {!isCollapsed && (
+        <div className="p-3 space-y-2">
+          <Link
+            to="/search"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-500 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md hover:text-gray-900 dark:hover:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
+            onClick={onClose}
+          >
+            <Search className="w-4 h-4" />
+            Search...
+          </Link>
+          <GitHubAuth />
+          {onGitHubLoad && (
+            <GitHubInput onLoad={onGitHubLoad} />
+          )}
+        </div>
+      )}
     </nav>
   )
 }

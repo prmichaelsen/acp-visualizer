@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0] - 2026-03-18
+
+### Added
+- Sidebar collapse/expand control with chevron button
+- Icon-only mode when sidebar is collapsed (64px width)
+- Tooltips on nav items in collapsed mode
+- Smooth width transitions (300ms animation)
+
+### Changed
+- Sidebar width toggles between 224px (expanded) and 64px (collapsed)
+- Search widget and GitHub auth hidden in collapsed state
+- Project selector hidden in collapsed state
+
 ## [0.12.0] - 2026-03-18
 
 ### Added
