@@ -118,7 +118,8 @@ function RootLayout() {
     setInitialLoadDone(true)
 
     const repoParam = getRepoFromUrl()
-    if (repoParam && !progressData) {
+    // Repo param takes precedence over default local data
+    if (repoParam) {
       fetchGitHubProgress({ data: repoParam }).then((result) => {
         if (result.ok) {
           setProgressData(result.data)
@@ -126,7 +127,7 @@ function RootLayout() {
         }
       })
     }
-  }, [initialLoadDone, progressData])
+  }, [initialLoadDone])
 
   const handleGitHubLoad = useCallback(async (owner: string, repo: string) => {
     const result = await fetchGitHubProgress({ data: { owner, repo } })

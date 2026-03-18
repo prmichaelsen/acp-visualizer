@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.3] - 2026-03-18
+
+### Fixed
+- Repo URL parameter now properly reloads on page refresh
+- GitHub repo data takes precedence over local data when ?repo= param is present
+
 ## [0.10.2] - 2026-03-18
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "@prmichaelsen/acp-visualizer",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "type": "module",
   "description": "Browser-based dashboard for visualizing ACP progress.yaml data",
   "bin": {
