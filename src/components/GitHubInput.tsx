@@ -20,9 +20,22 @@ export function GitHubInput({ onLoad }: GitHubInputProps) {
   const [suggestions, setSuggestions] = useState<RepoSuggestion[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [searchLoading, setSearchLoading] = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 0 })
   const inputRef = useRef<HTMLDivElement>(null)
 
   const token = getStoredToken()
+
+  // Update dropdown position when shown
+  useEffect(() => {
+    if (showSuggestions && inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect()
+      setDropdownStyle({
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+      })
+    }
+  }, [showSuggestions])
 
   // Search for repos when user types (authenticated only)
   useEffect(() => {
@@ -123,9 +136,16 @@ export function GitHubInput({ onLoad }: GitHubInputProps) {
         </button>
       </div>
 
-      {/* Suggestions dropdown */}
+      {/* Suggestions dropdown - using fixed positioning to avoid clipping */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-gray-900 border border-gray-800 rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <div
+          className="fixed z-[100] bg-gray-900 border border-gray-800 rounded-md shadow-lg max-h-60 overflow-y-auto"
+          style={{
+            top: `${dropdownStyle.top}px`,
+            left: `${dropdownStyle.left}px`,
+            width: `${dropdownStyle.width}px`,
+          }}
+        >
           {suggestions.map((repo) => (
             <button
               key={repo.full_name}
