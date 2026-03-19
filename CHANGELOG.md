@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.13.2] - 2026-03-19
+
+### Fixed
+- Use milestone ID number instead of array index for task key mapping, fixing wrong mappings when milestones are out of order in YAML
+
 ## [0.13.1] - 2026-03-19
 
 ### Changed

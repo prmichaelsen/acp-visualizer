@@ -1,6 +1,6 @@
 project:
   name: agent-context-protocol-visualizer
-  version: 0.13.1
+  version: 0.13.2
   started: 2026-03-14
   status: completed
   current_milestone: M4
