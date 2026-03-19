@@ -217,8 +217,9 @@ function normalizeTasks(raw: unknown, milestones: Milestone[]): Record<string, T
     // The task key might be the milestone ID itself, or "milestone_N"
     keyToMilestoneId.set(m.id, m.id)
     keyToMilestoneId.set(m.id.toLowerCase(), m.id)
-    keyToMilestoneId.set(`milestone_${i + 1}`, m.id)
-    // Also handle "milestone_N" where N matches the numeric part of "MN"
+    // Map "milestone_N" where N matches the numeric part of the milestone ID (e.g. M1 → milestone_1)
+    // NOTE: Do NOT use array index (i+1) here — milestones may be out of order in the YAML,
+    // so array position does not reliably correspond to milestone number.
     const numMatch = m.id.match(/(\d+)/)
     if (numMatch) {
       keyToMilestoneId.set(`milestone_${numMatch[1]}`, m.id)
