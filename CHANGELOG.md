@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.13.3] - 2026-03-20
+
+### Changed
+- Hosted mode (viz.agentcontextprotocol.net) defaults to loading prmichaelsen/agent-context-protocol when no ?repo= param is present
+
 ## [0.13.2] - 2026-03-19
 
 ### Fixed

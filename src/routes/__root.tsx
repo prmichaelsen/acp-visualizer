@@ -121,12 +121,19 @@ function RootLayout() {
 
     const repoParam = getRepoFromUrl()
     // Repo param takes precedence over default local data
-    if (repoParam) {
+    // In hosted mode with no repo param, default to prmichaelsen/agent-context-protocol
+    const target = repoParam
+      || (import.meta.env.VITE_HOSTED && !context.progressData
+        ? { owner: 'prmichaelsen', repo: 'agent-context-protocol' }
+        : null)
+
+    if (target) {
       const token = getStoredToken()
-      void (fetchGitHubProgress({ data: { ...repoParam, token: token || undefined } }) as Promise<GitHubResult>).then((result) => {
+      void (fetchGitHubProgress({ data: { ...target, token: token || undefined } }) as Promise<GitHubResult>).then((result) => {
         if (result.ok) {
           setProgressData(result.data)
-          setCurrentProject(`${repoParam.owner}/${repoParam.repo}`)
+          setCurrentProject(`${target.owner}/${target.repo}`)
+          setRepoInUrl(`${target.owner}/${target.repo}`)
         }
       })
     }
